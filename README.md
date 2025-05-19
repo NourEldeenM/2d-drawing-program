@@ -7,7 +7,7 @@
 
 ## Configure the Build System
 1. Create a `.vscode` folder in your project
-2. Create `tasks.json` in it with:
+2. For MinGW Create `tasks.json` in it with:
 ```json
 {
     "version": "2.0.0",
@@ -32,6 +32,36 @@
                 "isDefault": true
             },
             "problemMatcher": ["$gcc"]
+        }
+    ]
+}
+```
+4. For MSVC, put this instead:
+```json
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build with MSVC",
+            "type": "shell",
+            "command": "cl",
+            "args": [
+                "/EHsc",
+                "/I C:\\raylib\\include",
+                "main.cpp",
+                "/link",
+                "/LIBPATH:C:\\raylib\\lib",
+                "raylib.lib",
+                "user32.lib",
+                "gdi32.lib",
+                "winmm.lib",
+                "shell32.lib"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": ["$msCompile"]
         }
     ]
 }
