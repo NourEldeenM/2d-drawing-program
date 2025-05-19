@@ -1,5 +1,6 @@
 # 2d-drawing-program
 
+Used *raylib* (checkout [raylib documentation](https://www.raylib.com/index.html)) for cheatsheets and examples.
 ## How to setup raylib for GUI
 1. Go to [Raylib's GitHub releases](https://github.com/raysan5/raylib/releases)
 2. Download the latest `raylib-5.0_win64_mingw-w64.zip` (for MinGW) or `raylib-5.0_win64_msvc20XX.zip` (for MSVC)
