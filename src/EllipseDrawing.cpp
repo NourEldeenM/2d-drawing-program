@@ -48,3 +48,59 @@ void DrawEllipsePolar2(HDC hdc, int xc, int yc, int a, int b, COLORREF color){
         DrawPoints(hdc, xc, yc, round(x), round(y), color);
     }
 }
+
+void DrawEllipseMidPoint(HDC hdc, int xc, int yc, int a, int b, COLORREF color){
+	int x = 0, y = b;
+	int aSq = a * a, bSq = b * b;
+	DrawPoints(hdc, xc, yc, x, y, color);
+	int dx = (bSq << 1) * x, dy = (aSq << 1) * y;
+	while(dx < dy){
+		double d = (x + 1.0) * (x + 1.0) / aSq + (y - 0.5) * (y - 0.5) / bSq - 1;
+		if (d > 0)
+			--y,
+			dy -= (aSq << 1);
+		dx += (bSq << 1);
+		++x;
+		DrawPoints(hdc, xc, yc, x, y, color);
+	}
+	while(y >= 0){
+		double d = (x + 0.5) * (x + 0.5) / aSq + (y - 1.0) * (y - 1.0) / bSq - 1;
+		if (d < 0)
+			++x,
+			dx += (bSq << 1);
+		dy -= (aSq << 1);
+		--y;
+		DrawPoints(hdc, xc, yc, x, y, color);
+	}
+}
+
+void DrawEllipseMidPointDDA(HDC hdc, int xc, int yc, int a, int b, COLORREF color){
+	int x = 0, y = b;
+	int aSq = a * a, bSq = b * b;
+	double d = bSq - aSq * b + 0.25 * aSq;
+	DrawPoints(hdc, xc, yc, x, y, color);
+	int dx = (bSq << 1) * x, dy = (aSq << 1) * y;
+	while(dx < dy){
+		double d = (x + 1.0) * (x + 1.0) / aSq + (y - 0.5) * (y - 0.5) / bSq - 1;
+		if (d > 0)
+			--y,
+			dy -= (aSq << 1),
+			d -= dy;
+		dx += (bSq << 1);
+		d += dx + bSq;
+		++x;
+		DrawPoints(hdc, xc, yc, x, y, color);
+	}
+	d = (bSq * (x + 0.5) * (x + 0.5) + aSq * (y - 1) * (y - 1) - aSq * bSq);
+	while(y >= 0){
+		double d = (x + 0.5) * (x + 0.5) / aSq + (y - 1.0) * (y - 1.0) / bSq - 1;
+		if (d < 0)
+			++x,
+			dx += (bSq << 1),
+			d += dx;
+		dy -= (aSq << 1);
+		d += aSq - dy;
+		--y;
+		DrawPoints(hdc, xc, yc, x, y, color);
+	}
+}
