@@ -1,12 +1,11 @@
 #include <raylib.h>
 #include <vector>
 #include "../algorithms/DrawingAlgorithm.h"
-#include "../algorithms/LineDDA.cpp"
 #include <iostream>
 #include <map>
-#include "../algorithms/BresenhamLineAlgorithm.h"
-#include "../algorithms/DDALineAlgorithm.h"
-#include "../algorithms/ParametricLineAlgorithm.h"
+#include "../algorithms/BresenhamLineAlgorithm.cpp"
+#include "../algorithms/DDALineAlgorithm.cpp"
+#include "../algorithms/ParametricLineAlgorithm.cpp"
 
 using namespace std;
 
@@ -29,7 +28,7 @@ private:
 public:
     GUI()
     {
-        currentAlgorithm = new LineDDA();
+        currentAlgorithm = new DDALineAlgorithm();
         isColoredLine = false;
 
         screenHeight = GetScreenHeight();
@@ -101,7 +100,7 @@ public:
                     case 0: // Line (DDA)
                         if (currentAlgorithm)
                             delete currentAlgorithm;
-                        currentAlgorithm = new LineDDA();
+                        currentAlgorithm = new DDALineAlgorithm();
                         isColoredLine = false;
                         break;
 
@@ -191,7 +190,7 @@ public:
             }
         }
 
-               if (isColoredLine && dynamic_cast<ParametricLineAlgorithm *>(currentAlgorithm))
+        if (isColoredLine && dynamic_cast<ParametricLineAlgorithm *>(currentAlgorithm))
         {
             auto paramAlgorithm = dynamic_cast<ParametricLineAlgorithm *>(currentAlgorithm);
             const auto &coloredPoints = paramAlgorithm->getColoredPoints();
