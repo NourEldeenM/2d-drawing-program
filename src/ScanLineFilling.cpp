@@ -1,9 +1,8 @@
 #include <windows.h>
 #include <algorithm>
 #include <cmath>
-#include <Point.cpp>
 #include <vector>
-#include <utility>
+#include "Point.cpp"
 #include "LineDrawing.cpp"
 using namespace std;
 

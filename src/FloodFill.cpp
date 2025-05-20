@@ -1,7 +1,7 @@
 #include <windows.h>
 #include <queue>
 #include <stack>
-#include <Point.cpp>
+#include "Point.cpp"
 
 using namespace std;
 

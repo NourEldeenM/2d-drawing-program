@@ -1,7 +1,7 @@
 #include <windows.h>
 #include <algorithm>
 #include <cmath>
-#include <Point.cpp>
+#include "Point.cpp"
 
 void drawQuadCurve(
     HDC hdc, 
