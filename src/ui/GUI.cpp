@@ -4,6 +4,9 @@
 #include "../algorithms/LineDDA.cpp"
 #include <iostream>
 #include <map>
+#include "../algorithms/BresenhamLineAlgorithm.h"
+#include "../algorithms/DDALineAlgorithm.h"
+#include "../algorithms/ParametricLineAlgorithm.h"
 
 using namespace std;
 
@@ -21,11 +24,13 @@ private:
     vector<Rectangle> menuOptions;
     vector<const char *> menuOptionLabels;
     int selectedOption;
+    bool isColoredLine;
 
 public:
     GUI()
     {
         currentAlgorithm = new LineDDA();
+        isColoredLine = false;
 
         screenHeight = GetScreenHeight();
         screenWidth = GetScreenWidth();
@@ -39,6 +44,9 @@ public:
 
         menuOptionLabels = {
             "Line (DDA)",
+            "Line (Bresenham)",
+            "Line (Parametric)",
+            "Colored Line (Parametric)",
             "Clear Canvas"};
 
         for (int i = 0; i < menuOptionLabels.size(); i++)
@@ -56,11 +64,13 @@ public:
         }
     }
 
-    void run() {
+    void run()
+    {
         InitWindow(screenWidth, screenHeight, "2d drawing program");
         SetTargetFPS(60);
 
-        while (!WindowShouldClose()) {
+        while (!WindowShouldClose())
+        {
             handleInput();
             render();
         }
@@ -92,8 +102,34 @@ public:
                         if (currentAlgorithm)
                             delete currentAlgorithm;
                         currentAlgorithm = new LineDDA();
+                        isColoredLine = false;
                         break;
-                    case 1: // Clear Canvas
+
+                    case 1: // Line (Bresenham)
+                        if (currentAlgorithm)
+                            delete currentAlgorithm;
+                        currentAlgorithm = new BresenhamLineAlgorithm();
+                        isColoredLine = false;
+                        break;
+
+                    case 2: // Line (Parametric)
+                        if (currentAlgorithm)
+                            delete currentAlgorithm;
+                        currentAlgorithm = new ParametricLineAlgorithm();
+                        isColoredLine = false;
+                        break;
+
+                    case 3: // Colored Line (Parametric)
+                    {
+                        if (currentAlgorithm)
+                            delete currentAlgorithm;
+                        auto paramLine = new ParametricLineAlgorithm();
+                        paramLine->setColors(255, 0, 0, 0, 0, 255); // Red to Blue gradient
+                        currentAlgorithm = paramLine;
+                        isColoredLine = true;
+                        break;
+                    }
+                    case 4: // Clear Canvas
                         inputPoints.clear();
                         drawnShapes.clear();
                         break;
@@ -112,10 +148,13 @@ public:
             if (p.y > menuButton.y + menuButton.height || p.x > menuButton.x + menuButton.width)
             {
                 inputPoints.push_back(p);
-                if (currentAlgorithm && inputPoints.size() >= currentAlgorithm->getRequiredPoints()) {
+                if (currentAlgorithm && inputPoints.size() >= currentAlgorithm->getRequiredPoints())
+                {
                     vector<Point> shape = currentAlgorithm->draw(inputPoints);
                     if (!shape.empty())
+                    {
                         drawnShapes.push_back(shape); // Store the shape
+                    }
                     inputPoints.clear(); // Reset for next line
                 }
             }
@@ -132,24 +171,43 @@ public:
         DrawRectangleLinesEx(menuButton, 2, DARKBLUE);
         DrawText("Menu", menuButton.x + 30, menuButton.y + 10, 20, DARKBLUE);
 
-        if (menuExpanded) {
-            for (int i = 0; i < menuOptions.size(); i++) {
+        if (menuExpanded)
+        {
+            for (int i = 0; i < menuOptions.size(); i++)
+            {
                 Color bgColor = (selectedOption == i) ? LIGHTGRAY : RAYWHITE; // highlight selected option
                 DrawRectangleRec(menuOptions[i], bgColor);
                 DrawRectangleLinesEx(menuOptions[i], 1, DARKGRAY);
                 DrawText(menuOptionLabels[i], menuOptions[i].x + 10, menuOptions[i].y + 10, 20, DARKGRAY);
             }
         }
-        
-        // Draw all stored lines
-        for (const auto &shape : drawnShapes) {
-            for (const Point &p : shape) {
+
+        // Draw all stored shapes
+        for (const auto &shape : drawnShapes)
+        {
+            for (const Point &p : shape)
+            {
                 DrawPixel(p.x, p.y, BLACK);
             }
         }
 
+               if (isColoredLine && dynamic_cast<ParametricLineAlgorithm *>(currentAlgorithm))
+        {
+            auto paramAlgorithm = dynamic_cast<ParametricLineAlgorithm *>(currentAlgorithm);
+            const auto &coloredPoints = paramAlgorithm->getColoredPoints();
+
+            if (!coloredPoints.empty() && !drawnShapes.empty())
+            {
+                for (const auto &cp : coloredPoints)
+                {
+                    DrawPixel(cp.x, cp.y, Color{(unsigned char)cp.r, (unsigned char)cp.g, (unsigned char)cp.b, 255});
+                }
+            }
+        }
+
         // Draw current input points
-        for (const Point &p : inputPoints) {
+        for (const Point &p : inputPoints)
+        {
             DrawCircle(p.x, p.y, 3, RED);
         }
 

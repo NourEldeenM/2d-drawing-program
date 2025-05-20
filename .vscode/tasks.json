@@ -11,8 +11,10 @@
                 "src/main.cpp",
                 "src/ui/GUI.cpp",
                 "src/algorithms/LineDDA.cpp",
-                // Add other cpp files as needed
-                "-I", "C:\\raylib\\include",
+                "src/algorithms/DDALineAlgorithm.h",
+                "src/algorithms/BresenhamLineAlgorithm.h",
+                "src/algorithms/ParametricLineAlgorithm.h",
+                "-I", "C:\\raylib\\include", 
                 "-L", "C:\\raylib\\lib",
                 "-lraylib",
                 "-lopengl32",
