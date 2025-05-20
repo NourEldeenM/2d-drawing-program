@@ -8,8 +8,11 @@
             "args": [
                 "-o",
                 "game.exe",
-                "main.cpp",
-                "-I", "C:\\raylib\\include", // adjust the path if you didn't install it in C:\raylib
+                "src/main.cpp",
+                "src/ui/GUI.cpp",
+                "src/algorithms/LineDDA.cpp",
+                // Add other cpp files as needed
+                "-I", "C:\\raylib\\include",
                 "-L", "C:\\raylib\\lib",
                 "-lraylib",
                 "-lopengl32",
