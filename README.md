@@ -75,3 +75,34 @@ Used *raylib* (checkout [raylib documentation](https://www.raylib.com/index.html
 ```bash
 .\game.exe
 ```
+
+## Folder Structure
+
+```plaintext
+GraphicsApp/
+├── include/
+│   ├── algorithms/           # Drawing algorithms
+│   │   ├── Algorithm.h       # Base interface
+│   │   ├── LineDDA.h
+│   │   ├── BresenhamCircle.h
+│   │   ├── HermiteCurve.h
+│   │   ├── BezierCurve.h
+│   │   └── ...
+│   ├── ui/                   # UI components
+│   │   └── GUI.h
+│   └── Application.h         # Main application class
+├── src/
+│   ├── algorithms/
+│   │   ├── LineDDA.cpp
+│   │   ├── BresenhamCircle.cpp
+│   │   └── ...
+│   ├── ui/
+│   │   └── GUI.cpp
+│   ├── utils/
+│   │   └── matrixUtils.cpp
+│   ├── Application.cpp
+│   └── main.cpp
+├── .gitignore
+├── Project Description.pdf
+└── README.md
+```
