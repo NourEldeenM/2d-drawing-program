@@ -1,5 +1,6 @@
 #include "DrawingAlgorithm.h"
 #include <cmath>
+#include <string> 
 
 using namespace std;
 
@@ -7,6 +8,11 @@ using namespace std;
 class LineDDA : public DrawingAlgorithm
 {
 public:
+    LineDDA() {
+        setName("Line DDA");
+        setRequiredPoints(2);
+    }
+
     vector<Point> draw(vector<Point> &inputPoints) override {
         vector<Point> linePoints;
 
