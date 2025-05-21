@@ -19,6 +19,9 @@
                 "src/algorithms/CircleDrawingAlgos/CircleMidPointDDAModified.cpp",
                 "src/algorithms/CircleDrawingAlgos/CirclePolar.cpp",
                 "src/algorithms/CircleDrawingAlgos/CirclePolarIterative.cpp",
+                "src/algorithms/QuadAndCubicCurvesAlgos/BezierCurveAlgorithm.cpp",
+                "src/algorithms/QuadAndCubicCurvesAlgos/QuadraticCurveAlgorithm.cpp",
+
                 "-I", "C:\\raylib\\include", 
                 "-L", "C:\\raylib\\lib",
                 "-lraylib",

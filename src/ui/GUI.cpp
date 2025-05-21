@@ -11,6 +11,8 @@
 #include "../algorithms/CircleDrawingAlgos/CircleMidPointDDAModified.cpp"
 #include "../algorithms/CircleDrawingAlgos/CirclePolar.cpp"
 #include "../algorithms/CircleDrawingAlgos/CirclePolarIterative.cpp"
+#include "../algorithms/QuadAndCubicCurvesAlgos/BezierCurveAlgorithm.cpp"
+#include "../algorithms/QuadAndCubicCurvesAlgos/QuadraticCurveAlgorithm.cpp"
 
 
 using namespace std;
@@ -59,6 +61,8 @@ public:
             "Circle (Polar Iterative)",
             "Circle (MidPoint DDA)",
             "Circle (Enhanced MidPoint DDA)",
+            "Quadratic Curve",
+            "Bezier Curve",
             "Clear Canvas"};
 
         for (int i = 0; i < menuOptionLabels.size(); i++)
@@ -171,7 +175,19 @@ public:
                         currentAlgorithm = new CircleMidPointDDAModifiedAlgorithm();
                         isColoredLine = false;
                         break;
-                    case 9: // Clear Canvas
+                    case 9: // Quadratic Curve
+                        if (currentAlgorithm)
+                            delete currentAlgorithm;
+                        currentAlgorithm = new QuadraticCurveAlgorithm();
+                        isColoredLine = false;
+                        break;
+                    case 10: // Bezier Curve
+                        if (currentAlgorithm)
+                            delete currentAlgorithm;
+                        currentAlgorithm = new BezierCurveAlgorithm();
+                        isColoredLine = false;
+                        break;
+                    case 11: // Clear Canvas
                         inputPoints.clear();
                         drawnShapes.clear();
                         break;
