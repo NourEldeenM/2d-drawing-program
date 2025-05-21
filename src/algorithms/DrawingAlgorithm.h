@@ -9,7 +9,7 @@ struct Point
     int x, y;
 };
 
-void DrawCirclePoints(Point center, Point p, std::vector<Point> &points)
+inline void DrawCirclePoints(Point center, Point p, std::vector<Point> &points)
 {
     int dx[] = {p.x, -p.x, p.x, -p.x, p.y, -p.y, p.y, -p.y};
     int dy[] = {p.y, p.y, -p.y, -p.y, p.x, p.x, -p.x, -p.x};
