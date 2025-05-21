@@ -8,6 +8,11 @@ using namespace std;
 class CircleMidPointDDAModifiedAlgorithm : public DrawingAlgorithm
 {
 public:
+    CircleMidPointDDAModifiedAlgorithm()
+    {
+        setName((char *)"Circle Mid Point DDA Modified");
+        setRequiredPoints(2);
+    }
     vector<pair<Point, Color>> draw(vector<Point> &pts, vector<Color> drawingColors = {BLACK}) override
     {
         vector<pair<Point, Color>> result;
