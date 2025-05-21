@@ -13,7 +13,6 @@ class ParametricLineAlgorithm : public DrawingAlgorithm
 private:
     int startR = 0, startG = 0, startB = 0;
     int endR = 255, endG = 255, endB = 255;
-    std::vector<ColoredPoint> coloredPoints;
 
 public:
     ParametricLineAlgorithm()
@@ -22,26 +21,19 @@ public:
         setRequiredPoints(2); // Start and end points
     }
 
-    void setColors(int r1, int g1, int b1, int r2, int g2, int b2)
+    void setColors(Color c1, Color c2)
     {
-        startR = r1;
-        startG = g1;
-        startB = b1;
-        endR = r2;
-        endG = g2;
-        endB = b2;
+        startR = c1.r;
+        startG = c1.g;
+        startB = c1.b;
+        endR = c2.r;
+        endG = c2.g;
+        endB = c2.b;
     }
 
-    const std::vector<ColoredPoint> &getColoredPoints() const
+    vector<pair<Point, Color>> draw(vector<Point> &inputPoints, vector<Color> drawingColor = {BLACK}) override
     {
-        return coloredPoints;
-    }
-
-    std::vector<Point> draw(std::vector<Point> &inputPoints) override
-    {
-        std::vector<Point> outputPoints;
-        coloredPoints.clear();
-
+        vector<pair<Point, Color>> outputPoints;
         if (inputPoints.size() < 2)
         {
             return outputPoints; // Not enough points
@@ -52,6 +44,8 @@ public:
         int x2 = inputPoints[1].x;
         int y2 = inputPoints[1].y;
 
+        setColors(drawingColor[0], drawingColor[1]);
+
         int alpha1 = x2 - x1;
         int alpha2 = y2 - y1;
         int alphaRed = endR - startR;
@@ -60,10 +54,7 @@ public:
 
         // Add the first point
         Point firstPoint = {x1, y1};
-        outputPoints.push_back(firstPoint);
-
-        ColoredPoint coloredPoint = {x1, y1, startR, startG, startB};
-        coloredPoints.push_back(coloredPoint);
+        outputPoints.push_back({firstPoint, drawingColor[0]});
 
         double step = 1.0 / std::max(abs(alpha1), abs(alpha2));
         for (double t = step; t <= 1; t += step)
@@ -76,12 +67,9 @@ public:
             int b = round(startB + t * alphaBlue);
 
             Point p = {x, y};
-            outputPoints.push_back(p);
-
-            ColoredPoint cp = {x, y, r, g, b};
-            coloredPoints.push_back(cp);
+            Color c = {r, g, b, 255};
+            outputPoints.push_back({p, c});
         }
-
         return outputPoints;
     }
 };

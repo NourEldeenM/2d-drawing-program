@@ -17,9 +17,9 @@ public:
         return static_cast<int>(x + 0.5);
     }
 
-    std::vector<Point> draw(std::vector<Point> &inputPoints) override
+    vector<pair<Point, Color>> draw(vector<Point> &inputPoints, vector<Color> drawingColor = {BLACK}) override
     {
-        std::vector<Point> outputPoints;
+        vector<pair<Point, Color>> outputPoints;
 
         if (inputPoints.size() < 2)
         {
@@ -35,7 +35,7 @@ public:
 
         // Add first point
         Point p = {x1, y1};
-        outputPoints.push_back(p);
+        outputPoints.push_back({p, drawingColor[0]});
 
         if (abs(dx) >= abs(dy))
         {
@@ -54,7 +54,7 @@ public:
                 x++;
                 y += m;
                 Point p = {x, Round(y)};
-                outputPoints.push_back(p);
+                outputPoints.push_back({p, drawingColor[0]});
             }
         }
         else
@@ -74,7 +74,7 @@ public:
                 y++;
                 x += mi;
                 Point p = {Round(x), y};
-                outputPoints.push_back(p);
+                outputPoints.push_back({p, drawingColor[0]});
             }
         }
 

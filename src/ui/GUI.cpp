@@ -14,9 +14,10 @@ class GUI
 private:
     DrawingAlgorithm *currentAlgorithm;
     vector<Point> inputPoints;
-    vector<vector<Point>> drawnShapes;
+    vector<vector<pair<Point, Color>>> drawnShapes;
     int screenWidth;
     int screenHeight;
+    vector<Color> drawingColor;
 
     bool menuExpanded;
     Rectangle menuButton;
@@ -30,6 +31,7 @@ public:
     {
         currentAlgorithm = new DDALineAlgorithm();
         isColoredLine = false;
+        drawingColor.push_back(BLACK);
 
         screenHeight = GetScreenHeight();
         screenWidth = GetScreenWidth();
@@ -123,7 +125,7 @@ public:
                         if (currentAlgorithm)
                             delete currentAlgorithm;
                         auto paramLine = new ParametricLineAlgorithm();
-                        paramLine->setColors(255, 0, 0, 0, 0, 255); // Red to Blue gradient
+                        drawingColor.push_back(YELLOW);
                         currentAlgorithm = paramLine;
                         isColoredLine = true;
                         break;
@@ -149,7 +151,7 @@ public:
                 inputPoints.push_back(p);
                 if (currentAlgorithm && inputPoints.size() >= currentAlgorithm->getRequiredPoints())
                 {
-                    vector<Point> shape = currentAlgorithm->draw(inputPoints);
+                    vector<pair<Point, Color>> shape = currentAlgorithm->draw(inputPoints, drawingColor);
                     if (!shape.empty())
                     {
                         drawnShapes.push_back(shape); // Store the shape
@@ -184,25 +186,25 @@ public:
         // Draw all stored shapes
         for (const auto &shape : drawnShapes)
         {
-            for (const Point &p : shape)
+            for (const auto &p : shape)
             {
-                DrawPixel(p.x, p.y, BLACK);
+                DrawPixel(p.first.x, p.first.y, p.second);
             }
         }
 
-        if (isColoredLine && dynamic_cast<ParametricLineAlgorithm *>(currentAlgorithm))
-        {
-            auto paramAlgorithm = dynamic_cast<ParametricLineAlgorithm *>(currentAlgorithm);
-            const auto &coloredPoints = paramAlgorithm->getColoredPoints();
+        // if (isColoredLine && dynamic_cast<ParametricLineAlgorithm *>(currentAlgorithm))
+        // {
+        //     auto paramAlgorithm = dynamic_cast<ParametricLineAlgorithm *>(currentAlgorithm);
+        //     const auto &coloredPoints = paramAlgorithm->getColoredPoints();
 
-            if (!coloredPoints.empty() && !drawnShapes.empty())
-            {
-                for (const auto &cp : coloredPoints)
-                {
-                    DrawPixel(cp.x, cp.y, Color{(unsigned char)cp.r, (unsigned char)cp.g, (unsigned char)cp.b, 255});
-                }
-            }
-        }
+        //     if (!coloredPoints.empty() && !drawnShapes.empty())
+        //     {
+        //         for (const auto &cp : coloredPoints)
+        //         {
+        //             DrawPixel(cp.x, cp.y, Color{(unsigned char)cp.r, (unsigned char)cp.g, (unsigned char)cp.b, 255});
+        //         }
+        //     }
+        // }
 
         // Draw current input points
         for (const Point &p : inputPoints)

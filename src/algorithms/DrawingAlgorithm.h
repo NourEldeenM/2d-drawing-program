@@ -2,6 +2,7 @@
 #define DRAWINGALGORITHM_H
 
 #include <vector>
+#include <raylib.h>
 
 struct Point
 {
@@ -29,7 +30,7 @@ public:
         requiredPoints = rp;
     }
     
-    virtual std::vector<Point> draw(std::vector<Point> &inputPoints) = 0;
+    virtual std::vector<std::pair<Point, Color>> draw(std::vector<Point> &inputPoints, std::vector<Color> drawingColors = {BLACK}) = 0;
     virtual ~DrawingAlgorithm() = default;
 };
 
