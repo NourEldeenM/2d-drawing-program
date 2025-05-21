@@ -3,9 +3,9 @@
 #include "../algorithms/DrawingAlgorithm.h"
 #include <iostream>
 #include <map>
-#include "../algorithms/BresenhamLineAlgorithm.cpp"
-#include "../algorithms/DDALineAlgorithm.cpp"
-#include "../algorithms/ParametricLineAlgorithm.cpp"
+#include "../algorithms/LineDrawingAlgos/BresenhamLineAlgorithm.cpp"
+#include "../algorithms/LineDrawingAlgos/DDALineAlgorithm.cpp"
+#include "../algorithms/LineDrawingAlgos/ParametricLineAlgorithm.cpp"
 
 using namespace std;
 
