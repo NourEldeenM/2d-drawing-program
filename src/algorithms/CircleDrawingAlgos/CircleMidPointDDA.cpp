@@ -1,11 +1,11 @@
 #include "../DrawingAlgorithm.h"
 #include <cmath>
 #include <vector>
-#include "DrawCirclePoint.cpp"
+#include "CirclePoint.cpp"
 
 using namespace std;
 
-class DrawCircleMidPointDDA : public DrawingAlgorithm {
+class CircleMidPointDDAAlgorithm : public DrawingAlgorithm {
 public:
     vector<pair<Point, Color>> draw(vector<Point>& pts, vector<Color> drawingColors = {BLACK}) override {
         vector<pair<Point, Color>> result;

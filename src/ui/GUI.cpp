@@ -6,6 +6,12 @@
 #include "../algorithms/LineDrawingAlgos/BresenhamLineAlgorithm.cpp"
 #include "../algorithms/LineDrawingAlgos/DDALineAlgorithm.cpp"
 #include "../algorithms/LineDrawingAlgos/ParametricLineAlgorithm.cpp"
+#include "../algorithms/CircleDrawingAlgos/CircleCartesian.cpp"
+#include "../algorithms/CircleDrawingAlgos/CircleMidPointDDA.cpp"
+#include "../algorithms/CircleDrawingAlgos/CircleMidPointDDAModified.cpp"
+#include "../algorithms/CircleDrawingAlgos/CirclePolar.cpp"
+#include "../algorithms/CircleDrawingAlgos/CirclePolarIterative.cpp"
+
 
 using namespace std;
 
@@ -48,6 +54,11 @@ public:
             "Line (Bresenham)",
             "Line (Parametric)",
             "Colored Line (Parametric)",
+            "Circle (Cartesian)",
+            "Circle (Polar)",
+            "Circle (Polar Iterative)",
+            "Circle (MidPoint DDA)",
+            "Circle (Enhanced MidPoint DDA)",
             "Clear Canvas"};
 
         for (int i = 0; i < menuOptionLabels.size(); i++)
@@ -130,7 +141,37 @@ public:
                         isColoredLine = true;
                         break;
                     }
-                    case 4: // Clear Canvas
+                    case 4: // Circle (Cartesian)
+                        if (currentAlgorithm)
+                            delete currentAlgorithm;
+                        currentAlgorithm = new CircleCartesianAlgorithm();
+                        isColoredLine = false;
+                        break;
+                    case 5: // Circle (Polar)
+                        if (currentAlgorithm)
+                            delete currentAlgorithm;
+                        currentAlgorithm = new CirclePolarAlgorithm();
+                        isColoredLine = false;
+                        break;
+                    case 6: // Circle (Polar Iterative)
+                        if (currentAlgorithm)
+                            delete currentAlgorithm;
+                        currentAlgorithm = new CirclePolarIterativeAlgorithm();
+                        isColoredLine = false;
+                        break;
+                    case 7: // Circle (MidPoint DDA)
+                        if (currentAlgorithm)
+                            delete currentAlgorithm;
+                        currentAlgorithm = new CircleMidPointDDAAlgorithm();
+                        isColoredLine = false;
+                        break;
+                    case 8: // Circle (Enhanced MidPoint DDA)
+                        if (currentAlgorithm)
+                            delete currentAlgorithm;
+                        currentAlgorithm = new CircleMidPointDDAModifiedAlgorithm();
+                        isColoredLine = false;
+                        break;
+                    case 9: // Clear Canvas
                         inputPoints.clear();
                         drawnShapes.clear();
                         break;

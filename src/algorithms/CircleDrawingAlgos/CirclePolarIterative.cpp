@@ -2,11 +2,11 @@
 #include <windows.h>
 #include <cmath>
 #include <vector>
-#include "DrawCirclePoint.cpp"
+#include "CirclePoint.cpp"
 
 using namespace std;
 
-class DrawCirclePolarIterative : public DrawingAlgorithm {
+class CirclePolarIterativeAlgorithm : public DrawingAlgorithm {
 public:
     vector<pair<Point, Color>> draw(vector<Point>& pts, vector<Color> drawingColors = {BLACK}) override {
         vector<pair<Point, Color>> result;
