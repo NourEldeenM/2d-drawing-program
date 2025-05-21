@@ -1,4 +1,4 @@
-#include "DrawingAlgorithm.h"
+#include "../DrawingAlgorithm.h"
 #include <algorithm>
 #include <cmath>
 using namespace std;
