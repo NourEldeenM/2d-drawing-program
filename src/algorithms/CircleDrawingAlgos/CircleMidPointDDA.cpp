@@ -5,9 +5,11 @@
 
 using namespace std;
 
-class CircleMidPointDDAAlgorithm : public DrawingAlgorithm {
+class CircleMidPointDDAAlgorithm : public DrawingAlgorithm
+{
 public:
-    vector<pair<Point, Color>> draw(vector<Point>& pts, vector<Color> drawingColors = {BLACK}) override {
+    vector<pair<Point, Color>> draw(vector<Point> &pts, vector<Color> drawingColors = {BLACK}) override
+    {
         vector<pair<Point, Color>> result;
         if (pts.size() < 2)
             return result;
@@ -17,18 +19,20 @@ public:
         int x = 0, y = radius;
         int d = 1 - radius;
         vector<Point> points;
-        DrawPoints(center, {x, y}, points);
-        while (x < y){
+        DrawCirclePoints(center, {x, y}, points);
+        while (x < y)
+        {
             if (d < 0)
                 d += (x << 1) + 3;
             else
                 d += ((x - y) << 1) + 5,
-                --y;
+                    --y;
             ++x;
-            DrawPoints(center, {x, y}, points);
+            DrawCirclePoints(center, {x, y}, points);
         }
         Color color = drawingColors.empty() ? BLACK : drawingColors[0];
-        for (const auto& p : points) result.push_back(make_pair(p, color));
+        for (const auto &p : points)
+            result.push_back(make_pair(p, color));
         return result;
     }
 };
