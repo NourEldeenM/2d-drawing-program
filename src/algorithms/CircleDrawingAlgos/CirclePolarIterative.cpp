@@ -9,6 +9,10 @@ using namespace std;
 class CirclePolarIterativeAlgorithm : public DrawingAlgorithm
 {
 public:
+    CirclePolarIterativeAlgorithm() {
+        setName((char*)"Circle Polar Iterative");
+        setRequiredPoints(2);
+    }
     vector<pair<Point, Color>> draw(vector<Point> &pts, vector<Color> drawingColors = {BLACK}) override
     {
         vector<pair<Point, Color>> result;
@@ -31,7 +35,7 @@ public:
         }
         Color color = drawingColors.empty() ? BLACK : drawingColors[0];
         for (const auto &p : points)
-            result.push_back(make_pair(p, color));
+            result.push_back({p, color});
         return result;
     }
 };
