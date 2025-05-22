@@ -129,7 +129,7 @@ public:
         }
         return false;
     }
-    
+
     void handleMenuOptionsSelection(int i)
     {
         switch (i)
@@ -239,13 +239,11 @@ public:
     {
         BeginDrawing();
         ClearBackground(RAYWHITE);
-
-        drawMenuButton();
-        if (menuExpanded)
-            drawMenuOptions();
         drawShapes();
         drawInputPoints();
-
+        if (menuExpanded)
+            drawMenuOptions();
+        drawMenuButton();
         EndDrawing();
     }
     
