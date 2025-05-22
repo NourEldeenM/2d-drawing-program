@@ -21,6 +21,8 @@
                 "src/algorithms/CircleDrawingAlgos/CirclePolarIterative.cpp",
                 "src/algorithms/QuadAndCubicCurvesAlgos/BezierCurveAlgorithm.cpp",
                 "src/algorithms/QuadAndCubicCurvesAlgos/QuadraticCurveAlgorithm.cpp",
+                "src/algorithms/QuadAndCubicCurvesAlgos/HermiteCurveAlgorithm.cpp",
+                "src/algorithms/QuadAndCubicCurvesAlgos/CardinalSplineCurve.cpp",
 
                 "-I", "C:\\raylib\\include", 
                 "-L", "C:\\raylib\\lib",

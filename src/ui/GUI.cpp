@@ -12,6 +12,8 @@
 #include "../algorithms/CircleDrawingAlgos/CirclePolar.cpp"
 #include "../algorithms/CircleDrawingAlgos/CirclePolarIterative.cpp"
 #include "../algorithms/QuadAndCubicCurvesAlgos/BezierCurveAlgorithm.cpp"
+#include "../algorithms/QuadAndCubicCurvesAlgos/HermiteCurveAlgorithm.cpp"
+#include "../algorithms/QuadAndCubicCurvesAlgos/CardinalSplineCurve.cpp"
 #include "../algorithms/QuadAndCubicCurvesAlgos/QuadraticCurveAlgorithm.cpp"
 #include "../algorithms/FillingAlgos/FloodFillAlgorithm.cpp"
 
@@ -64,11 +66,12 @@ public:
             "Quadratic Curve",
             "Bezier Curve",
             "Flood Fill",
+            "Hermite Curve",
+            "Cardinal Spline",
             "Clear Canvas"};
 
         for (int i = 0; i < menuOptionLabels.size(); i++)
             menuOptions.push_back({10, 60 + i * 45, 200, 40});
-        
     }
 
     ~GUI()
@@ -208,7 +211,19 @@ public:
             currentAlgorithm = new FloodFillAlgorithm();
             isColoredLine = false;
             break;
-        case 12: // Clear Canvas
+        case 12: // Hermite Curve
+            if (currentAlgorithm)
+                delete currentAlgorithm;
+            currentAlgorithm = new HermiteCurveAlgorithm();
+            isColoredLine = false;
+            break;
+        case 13: // Cardinal Spline
+            if (currentAlgorithm)
+                delete currentAlgorithm;
+            currentAlgorithm = new CardinalSplineAlgorithm();
+            isColoredLine = false;
+            break;
+        case 14: // Clear Canvas
             inputPoints.clear();
             drawnShapes.clear();
             break;
@@ -235,19 +250,21 @@ public:
         }
     }
 
-    void render() 
+    void render()
     {
         BeginDrawing();
         ClearBackground(RAYWHITE);
-        drawShapes();
-        drawInputPoints();
+
+        drawMenuButton();
         if (menuExpanded)
             drawMenuOptions();
-        drawMenuButton();
+        drawShapes();
+        drawInputPoints();
+
         EndDrawing();
     }
-    
-    void drawMenuButton() 
+
+    void drawMenuButton()
     {
         DrawRectangleRec(menuButton, SKYBLUE);
         DrawRectangleLinesEx(menuButton, 2, DARKBLUE);
@@ -277,5 +294,4 @@ public:
         for (const Point &p : inputPoints)
             DrawCircle(p.x, p.y, 3, RED);
     }
-
 };
