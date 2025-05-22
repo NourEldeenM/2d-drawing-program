@@ -13,6 +13,7 @@
 #include "../algorithms/CircleDrawingAlgos/CirclePolarIterative.cpp"
 #include "../algorithms/QuadAndCubicCurvesAlgos/BezierCurveAlgorithm.cpp"
 #include "../algorithms/QuadAndCubicCurvesAlgos/QuadraticCurveAlgorithm.cpp"
+#include "../algorithms/FillingAlgos/FloodFillAlgorithm.cpp"
 
 
 using namespace std;
@@ -63,6 +64,7 @@ public:
             "Circle (Enhanced MidPoint DDA)",
             "Quadratic Curve",
             "Bezier Curve",
+            "Flood Fill",
             "Clear Canvas"};
 
         for (int i = 0; i < menuOptionLabels.size(); i++)
@@ -187,7 +189,14 @@ public:
                         currentAlgorithm = new BezierCurveAlgorithm();
                         isColoredLine = false;
                         break;
-                    case 11: // Clear Canvas
+                    case 11: // Flood Fill
+                        if (currentAlgorithm)
+                            delete currentAlgorithm;
+                        drawingColor.push_back(BLUE);
+                        currentAlgorithm = new FloodFillAlgorithm();
+                        isColoredLine = false;
+                        break;
+                    case 12: // Clear Canvas
                         inputPoints.clear();
                         drawnShapes.clear();
                         break;
