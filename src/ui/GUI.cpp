@@ -16,6 +16,11 @@
 #include "../algorithms/QuadAndCubicCurvesAlgos/CardinalSplineCurve.cpp"
 #include "../algorithms/QuadAndCubicCurvesAlgos/QuadraticCurveAlgorithm.cpp"
 #include "../algorithms/FillingAlgos/FloodFillAlgorithm.cpp"
+#include "../algorithms/EllipseDrawingAlgos/EllipseCartesianAlgorithm.cpp"
+#include "../algorithms/EllipseDrawingAlgos/EllipsePolarAlgorithm.cpp"
+#include "../algorithms/EllipseDrawingAlgos/EllipsePolar2Algorithm.cpp"
+#include "../algorithms/EllipseDrawingAlgos/EllipseMidPointAlgorithm.cpp"
+#include "../algorithms/EllipseDrawingAlgos/EllipseMidPointDDAAlgorithm.cpp"
 
 using namespace std;
 
@@ -68,6 +73,11 @@ public:
             "Flood Fill",
             "Hermite Curve",
             "Cardinal Spline",
+            "Ellipse (Cartesian)",
+            "Ellipse (Polar)",
+            "Ellipse (Polar Iterative)",
+            "Ellipse (MidPoint)",
+            "Ellipse (MidPoint DDA)",
             "Clear Canvas"};
 
         for (int i = 0; i < menuOptionLabels.size(); i++)
@@ -223,7 +233,37 @@ public:
             currentAlgorithm = new CardinalSplineAlgorithm();
             isColoredLine = false;
             break;
-        case 14: // Clear Canvas
+        case 14: // Ellipse (Cartesian)
+            if (currentAlgorithm)
+                delete currentAlgorithm;
+            currentAlgorithm = new EllipseCartesianAlgorithm();
+            isColoredLine = false;
+            break;
+        case 15: // Ellipse (Polar)
+            if (currentAlgorithm)
+                delete currentAlgorithm;
+            currentAlgorithm = new EllipsePolarAlgorithm();
+            isColoredLine = false;
+            break;
+        case 16: // Ellipse (Polar Iterative)
+            if (currentAlgorithm)
+                delete currentAlgorithm;
+            currentAlgorithm = new EllipsePolar2Algorithm();
+            isColoredLine = false;
+            break;
+        case 17: // Ellipse (MidPoint)
+            if (currentAlgorithm)
+                delete currentAlgorithm;
+            currentAlgorithm = new EllipseMidPointAlgorithm();
+            isColoredLine = false;
+            break;
+        case 18: // Ellipse (MidPoint DDA)
+            if (currentAlgorithm)
+                delete currentAlgorithm;
+            currentAlgorithm = new EllipseMidPointDDAAlgorithm();
+            isColoredLine = false;
+            break;
+        case 19: // Clear Canvas
             inputPoints.clear();
             drawnShapes.clear();
             break;
