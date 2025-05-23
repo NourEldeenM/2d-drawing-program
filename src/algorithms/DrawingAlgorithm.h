@@ -17,6 +17,14 @@ inline void DrawCirclePoints(Point center, Point p, std::vector<Point> &points)
         points.push_back({center.x + dx[i], center.y + dy[i]});
 }
 
+inline void DrawEllipsePoints(Point center, Point p, std::vector<Point> &points)
+{
+    int dx[] = {p.x, -p.x, p.x, -p.x};
+    int dy[] = {p.y, p.y, -p.y, -p.y};
+    for (int i = 0; i < 4; i++)
+        points.push_back({center.x + dx[i], center.y + dy[i]});
+}
+
 class DrawingAlgorithm
 {
     char *name;
