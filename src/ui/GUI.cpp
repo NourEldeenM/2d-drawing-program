@@ -24,6 +24,17 @@
 
 using namespace std;
 
+struct MenuItem
+{
+    string label;
+    vector<MenuItem> subItems;
+    int algorithmId;
+    Rectangle bounds;
+    bool isExpanded;
+
+    MenuItem(string l, int id = -1) : label(l), algorithmId(id), isExpanded(false) {}
+};
+
 class GUI
 {
 private:
@@ -34,18 +45,18 @@ private:
     int screenHeight;
     vector<Color> drawingColor;
 
+    vector<MenuItem> menuItems;
     bool menuExpanded;
     Rectangle menuButton;
-    vector<Rectangle> menuOptions;
-    vector<const char *> menuOptionLabels;
-    int selectedOption;
-    bool isColoredLine;
+    MenuItem *activeSubmenu;
+    // vector<Rectangle> menuOptions;
+    // vector<const char *> menuOptionLabels;
+    // int selectedOption;
 
 public:
     GUI()
     {
         currentAlgorithm = new DDALineAlgorithm();
-        isColoredLine = false;
         drawingColor.push_back(BLACK);
 
         screenHeight = GetScreenHeight();
@@ -56,32 +67,46 @@ public:
 
         menuExpanded = false;
         menuButton = {10, 10, 120, 40};
-        selectedOption = -1;
 
-        menuOptionLabels = {
-            "Line (DDA)",
-            "Line (Bresenham)",
-            "Line (Parametric)",
-            "Colored Line (Parametric)",
-            "Circle (Cartesian)",
-            "Circle (Polar)",
-            "Circle (Polar Iterative)",
-            "Circle (MidPoint DDA)",
-            "Circle (Enhanced MidPoint DDA)",
-            "Quadratic Curve",
-            "Bezier Curve",
-            "Flood Fill",
-            "Hermite Curve",
-            "Cardinal Spline",
-            "Ellipse (Cartesian)",
-            "Ellipse (Polar)",
-            "Ellipse (Polar Iterative)",
-            "Ellipse (MidPoint)",
-            "Ellipse (MidPoint DDA)",
-            "Clear Canvas"};
+        menuItems = {
+            MenuItem("Line", -1),
+            MenuItem("Circle", -1),
+            MenuItem("Ellipse", -1),
+            MenuItem("Curves", -1),
+            MenuItem("Fill", -1),
+            MenuItem("Clear Canvas", 19)};
 
-        for (int i = 0; i < menuOptionLabels.size(); i++)
-            menuOptions.push_back({10, 60 + i * 45, 200, 40});
+        // Add subitems
+        menuItems[0].subItems = {
+            MenuItem("DDA", 0),
+            MenuItem("Bresenham", 1),
+            MenuItem("Parametric", 2),
+            MenuItem("Colored Parametric", 3)};
+
+        menuItems[1].subItems = {
+            MenuItem("Cartesian", 4),
+            MenuItem("Polar", 5),
+            MenuItem("Polar Iterative", 6),
+            MenuItem("MidPoint DDA", 7),
+            MenuItem("Enhanced MidPoint DDA", 8)};
+
+        menuItems[2].subItems = {
+            MenuItem("Cartesian", 14),
+            MenuItem("Polar", 15),
+            MenuItem("Polar Iterative", 16),
+            MenuItem("MidPoint", 17),
+            MenuItem("MidPoint DDA", 18)};
+
+        menuItems[3].subItems = {
+            MenuItem("Quadratic", 9),
+            MenuItem("Bezier", 10),
+            MenuItem("Hermite", 12),
+            MenuItem("Cardinal Spline", 13)};
+
+        menuItems[4].subItems = {
+            MenuItem("Flood Fill", 11)};
+
+        activeSubmenu = nullptr;
     }
 
     ~GUI()
@@ -127,16 +152,49 @@ public:
 
     bool handleMenuOptionSelection(const Vector2 &mousePoint)
     {
-        if (menuExpanded)
+        if (!menuExpanded)
+            return false;
+
+        for (auto &item : menuItems)
         {
-            for (int i = 0; i < menuOptions.size(); i++)
+            if (CheckCollisionPointRec(mousePoint, item.bounds))
             {
-                if (CheckCollisionPointRec(mousePoint, menuOptions[i]) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+                if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
                 {
-                    handleMenuOptionsSelection(i);
-                    menuExpanded = false;
-                    selectedOption = i;
+                    if (!item.subItems.empty())
+                    {
+                        // Toggle submenu
+                        item.isExpanded = !item.isExpanded;
+                        // Close other submenus
+                        for (auto &other : menuItems)
+                        {
+                            if (&other != &item)
+                                other.isExpanded = false;
+                        }
+                    }
+                    else if (item.algorithmId >= 0)
+                    {
+                        handleMenuOptionsSelection(item.algorithmId);
+                        menuExpanded = false;
+                        return true;
+                    }
                     return true;
+                }
+            }
+
+            if (item.isExpanded)
+            {
+                for (auto &subItem : item.subItems)
+                {
+                    if (CheckCollisionPointRec(mousePoint, subItem.bounds) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+                    {
+                        if (subItem.algorithmId >= 0)
+                        {
+                            handleMenuOptionsSelection(subItem.algorithmId);
+                            menuExpanded = false;
+                            return true;
+                        }
+                    }
                 }
             }
         }
@@ -151,117 +209,98 @@ public:
             if (currentAlgorithm)
                 delete currentAlgorithm;
             currentAlgorithm = new DDALineAlgorithm();
-            isColoredLine = false;
             break;
         case 1: // Line (Bresenham)
             if (currentAlgorithm)
                 delete currentAlgorithm;
             currentAlgorithm = new BresenhamLineAlgorithm();
-            isColoredLine = false;
             break;
         case 2: // Line (Parametric)
             if (currentAlgorithm)
                 delete currentAlgorithm;
             currentAlgorithm = new ParametricLineAlgorithm();
-            isColoredLine = false;
             break;
         case 3: // Colored Line (Parametric)
             if (currentAlgorithm)
                 delete currentAlgorithm;
             drawingColor.push_back(YELLOW);
             currentAlgorithm = new ParametricLineAlgorithm();
-            isColoredLine = true;
             break;
         case 4: // Circle (Cartesian)
             if (currentAlgorithm)
                 delete currentAlgorithm;
             currentAlgorithm = new CircleCartesianAlgorithm();
-            isColoredLine = false;
             break;
         case 5: // Circle (Polar)
             if (currentAlgorithm)
                 delete currentAlgorithm;
             currentAlgorithm = new CirclePolarAlgorithm();
-            isColoredLine = false;
             break;
         case 6: // Circle (Polar Iterative)
             if (currentAlgorithm)
                 delete currentAlgorithm;
             currentAlgorithm = new CirclePolarIterativeAlgorithm();
-            isColoredLine = false;
             break;
         case 7: // Circle (MidPoint DDA)
             if (currentAlgorithm)
                 delete currentAlgorithm;
             currentAlgorithm = new CircleMidPointDDAAlgorithm();
-            isColoredLine = false;
             break;
         case 8: // Circle (Enhanced MidPoint DDA)
             if (currentAlgorithm)
                 delete currentAlgorithm;
             currentAlgorithm = new CircleMidPointDDAModifiedAlgorithm();
-            isColoredLine = false;
             break;
         case 9: // Quadratic Curve
             if (currentAlgorithm)
                 delete currentAlgorithm;
             currentAlgorithm = new QuadraticCurveAlgorithm();
-            isColoredLine = false;
             break;
         case 10: // Bezier Curve
             if (currentAlgorithm)
                 delete currentAlgorithm;
             currentAlgorithm = new BezierCurveAlgorithm();
-            isColoredLine = false;
             break;
         case 11: // Flood Fill
             if (currentAlgorithm)
                 delete currentAlgorithm;
             drawingColor.push_back(BLUE);
             currentAlgorithm = new FloodFillAlgorithm();
-            isColoredLine = false;
             break;
         case 12: // Hermite Curve
             if (currentAlgorithm)
                 delete currentAlgorithm;
             currentAlgorithm = new HermiteCurveAlgorithm();
-            isColoredLine = false;
             break;
         case 13: // Cardinal Spline
             if (currentAlgorithm)
                 delete currentAlgorithm;
             currentAlgorithm = new CardinalSplineAlgorithm();
-            isColoredLine = false;
             break;
         case 14: // Ellipse (Cartesian)
             if (currentAlgorithm)
                 delete currentAlgorithm;
             currentAlgorithm = new EllipseCartesianAlgorithm();
-            isColoredLine = false;
             break;
         case 15: // Ellipse (Polar)
             if (currentAlgorithm)
                 delete currentAlgorithm;
             currentAlgorithm = new EllipsePolarAlgorithm();
-            isColoredLine = false;
             break;
         case 16: // Ellipse (Polar Iterative)
             if (currentAlgorithm)
                 delete currentAlgorithm;
             currentAlgorithm = new EllipsePolar2Algorithm();
-            isColoredLine = false;
             break;
         case 17: // Ellipse (MidPoint)
             if (currentAlgorithm)
                 delete currentAlgorithm;
             currentAlgorithm = new EllipseMidPointAlgorithm();
-            isColoredLine = false;
             break;
         case 18: // Ellipse (MidPoint DDA)
             if (currentAlgorithm)
                 delete currentAlgorithm;
             currentAlgorithm = new EllipseMidPointDDAAlgorithm();
-            isColoredLine = false;
             break;
         case 19: // Clear Canvas
             inputPoints.clear();
@@ -312,12 +351,37 @@ public:
 
     void drawMenuOptions()
     {
-        for (int i = 0; i < menuOptions.size(); i++)
+        float yOffset = menuButton.y + menuButton.height + 5;
+
+        for (auto &item : menuItems)
         {
-            Color bgColor = (selectedOption == i) ? LIGHTGRAY : RAYWHITE;
-            DrawRectangleRec(menuOptions[i], bgColor);
-            DrawRectangleLinesEx(menuOptions[i], 1, DARKGRAY);
-            DrawText(menuOptionLabels[i], menuOptions[i].x + 10, menuOptions[i].y + 10, 20, DARKGRAY);
+            item.bounds = {menuButton.x, yOffset, 200, 40};
+            Color bgColor = RAYWHITE;
+            DrawRectangleRec(item.bounds, bgColor);
+            DrawRectangleLinesEx(item.bounds, 1, DARKGRAY);
+            DrawText(item.label.c_str(), item.bounds.x + 10, item.bounds.y + 10, 20, DARKGRAY);
+
+            if (!item.subItems.empty())
+            {
+                DrawText(">", item.bounds.x + item.bounds.width - 20, item.bounds.y + 10, 20, DARKGRAY);
+            }
+
+            if (item.isExpanded)
+            {
+                float subX = item.bounds.x + item.bounds.width + 5;
+                float subY = item.bounds.y;
+
+                for (auto &subItem : item.subItems)
+                {
+                    subItem.bounds = {subX, subY, 200, 40};
+                    DrawRectangleRec(subItem.bounds, RAYWHITE);
+                    DrawRectangleLinesEx(subItem.bounds, 1, DARKGRAY);
+                    DrawText(subItem.label.c_str(), subItem.bounds.x + 10, subItem.bounds.y + 10, 20, DARKGRAY);
+                    subY += 45;
+                }
+            }
+
+            yOffset += 45;
         }
     }
 
