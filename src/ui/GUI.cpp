@@ -295,12 +295,11 @@ public:
         BeginDrawing();
         ClearBackground(RAYWHITE);
 
+        drawShapes();
+        drawInputPoints();
         drawMenuButton();
         if (menuExpanded)
             drawMenuOptions();
-        drawShapes();
-        drawInputPoints();
-
         EndDrawing();
     }
 

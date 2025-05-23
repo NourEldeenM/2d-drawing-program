@@ -1,28 +1,53 @@
 {
-    "version": "2.0.0",
-    "tasks": [
-        {
-            "label": "build with MinGW",
-            "type": "shell",
-            "command": "g++",
-            "args": [
-                "-o",
-                "game.exe",
-                "src/main.cpp",
-                "src/ui/GUI.cpp",
-                "src/algorithms/*/*.cpp",
-                "-I", "C:\\raylib\\include", 
-                "-L", "C:\\raylib\\lib",
-                "-lraylib",
-                "-lopengl32",
-                "-lgdi32",
-                "-lwinmm"
-            ],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "problemMatcher": ["$gcc"]
-        }
-    ]
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "build with MinGW",
+			"type": "shell",
+			"command": "g++",
+			"args": [
+				"-o",
+				"game.exe",
+				"src/main.cpp",
+				"src/ui/GUI.cpp",
+				"src/algorithms/CircleDrawingAlgos/CircleCartesian.cpp",
+				"src/algorithms/CircleDrawingAlgos/CircleMidPoint.cpp",
+				"src/algorithms/CircleDrawingAlgos/CircleMidPointDDA.cpp",
+				"src/algorithms/CircleDrawingAlgos/CircleMidPointDDAModified.cpp",
+				"src/algorithms/CircleDrawingAlgos/CirclePoint.cpp",
+				"src/algorithms/CircleDrawingAlgos/CirclePolar.cpp",
+				"src/algorithms/CircleDrawingAlgos/CirclePolarIterative.cpp",
+
+				"src/algorithms/EllipseDrawingAlgos/EllipseCartesianAlgorithm.cpp",
+				"src/algorithms/EllipseDrawingAlgos/EllipseMidPointAlgorithm.cpp",
+				"src/algorithms/EllipseDrawingAlgos/EllipseMidPointDDAAlgorithm.cpp",
+				"src/algorithms/EllipseDrawingAlgos/EllipsePolar2Algorithm.cpp",
+				"src/algorithms/EllipseDrawingAlgos/EllipsePolarAlgorithm.cpp",
+
+				"src/algorithms/FillingAlgos/FloodFillAlgorithm.cpp",
+
+				"src/algorithms/LineDrawingAlgos/BresenhamLineAlgorithm.cpp",
+				"src/algorithms/LineDrawingAlgos/DDALineAlgorithm.cpp",
+				"src/algorithms/LineDrawingAlgos/ParametricLineAlgorithm.cpp",
+
+				"src/algorithms/QuadAndCubicCurvesAlgos/BezierCurveAlgorithm.cpp",
+				"src/algorithms/QuadAndCubicCurvesAlgos/CardinalSplineCurve.cpp",
+				"src/algorithms/QuadAndCubicCurvesAlgos/HermiteCurveAlgorithm.cpp",
+				"src/algorithms/QuadAndCubicCurvesAlgos/QuadraticCurveAlgorithm.cpp",
+				"-I",
+				"C:\\raylib\\include",
+				"-L",
+				"C:\\raylib\\lib",
+				"-lraylib",
+				"-lopengl32",
+				"-lgdi32",
+				"-lwinmm"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"problemMatcher": ["$gcc"]
+		}
+	]
 }
