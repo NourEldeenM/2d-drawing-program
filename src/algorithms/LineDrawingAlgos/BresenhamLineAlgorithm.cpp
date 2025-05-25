@@ -3,8 +3,8 @@
 #include <cmath>
 using namespace std;
 
-#ifndef BRESENHAM_LINE_ALGORITHM_H
-#define BRESENHAM_LINE_ALGORITHM_H
+#ifndef BRESENHAM_LINE_ALGORITHM_CPP
+#define BRESENHAM_LINE_ALGORITHM_CPP
 
 class BresenhamLineAlgorithm : public DrawingAlgorithm
 {
@@ -88,4 +88,4 @@ public:
     }
 };
 
-#endif // BRESENHAM_LINE_ALGORITHM_H
+#endif 
