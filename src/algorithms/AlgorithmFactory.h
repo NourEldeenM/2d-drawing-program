@@ -18,6 +18,7 @@
 #include "EllipseDrawingAlgos/EllipsePolar2Algorithm.cpp"
 #include "EllipseDrawingAlgos/EllipseMidPointAlgorithm.cpp"
 #include "EllipseDrawingAlgos/EllipseMidPointDDAAlgorithm.cpp"
+#include "CircleQuarterFilling/CircleQuarterLineFilling.cpp"
 #include <memory>
 
 using namespace std;
@@ -74,9 +75,10 @@ public:
             return make_unique<EllipseMidPointAlgorithm>();
         case 18:
             return make_unique<EllipseMidPointDDAAlgorithm>();
-
+        case 19:
+            return make_unique<CircleQuarterLineFilling>(); // Circle Quarter Line Filling
         // Special Cases
-        case 19: // Clear Canvas - handled in GUI
+        case 20: // Clear Canvas - handled in GUI
             return nullptr;
 
         default:

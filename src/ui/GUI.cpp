@@ -134,7 +134,7 @@ public:
     void handleMenuOptionsSelection(int i)
     {
         // Handle special cases first
-        if (i == 19)
+        if (i == 20)
         { // Clear Canvas
             inputPoints.clear();
             drawnShapes.clear();

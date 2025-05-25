@@ -3,6 +3,9 @@
 #include <cmath>
 using namespace std;
 
+#ifndef BRESENHAM_LINE_ALGORITHM_H
+#define BRESENHAM_LINE_ALGORITHM_H
+
 class BresenhamLineAlgorithm : public DrawingAlgorithm
 {
 public:
@@ -84,3 +87,5 @@ public:
         return outputPoints;
     }
 };
+
+#endif // BRESENHAM_LINE_ALGORITHM_H
