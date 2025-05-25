@@ -134,7 +134,7 @@ public:
     void handleMenuOptionsSelection(int i)
     {
         // Handle special cases first
-        if (i == 20)
+        if (i == 0)
         { // Clear Canvas
             inputPoints.clear();
             drawnShapes.clear();
@@ -142,17 +142,23 @@ public:
         }
 
         // Handle color modifications
-        if (i == 3)
+        if (i == 4)
         { // Colored Parametric Line
-            if (drawingColor.size() > 1) 
+            if (drawingColor.size() > 1)
                 drawingColor.pop_back();
             drawingColor.push_back(RED);
         }
-        else if (i == 11)
+        else if (i == 12)
         { // Flood Fill
             if (drawingColor.size() > 1)
                 drawingColor.pop_back();
             drawingColor.push_back(BLUE);
+        }
+        else if (i == 21)
+        { // Convex Fill
+            if (drawingColor.size() > 1)
+                drawingColor.pop_back();
+            drawingColor.push_back(GREEN);
         }
 
         // Create new algorithm

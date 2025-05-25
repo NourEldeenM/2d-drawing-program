@@ -19,6 +19,7 @@
 #include "EllipseDrawingAlgos/EllipseMidPointAlgorithm.cpp"
 #include "EllipseDrawingAlgos/EllipseMidPointDDAAlgorithm.cpp"
 #include "CircleQuarterFilling/CircleQuarterLineFilling.cpp"
+#include "FillingAlgos/ConvexFillAlgorithm.cpp"
 #include <memory>
 
 using namespace std;
@@ -30,57 +31,57 @@ public:
     {
         switch (algorithmId)
         {
+        case 0: // Clear Canvas - handled in GUI
+            return nullptr;
         // Line Drawing Algorithms
-        case 0:
-            return make_unique<DDALineAlgorithm>();
         case 1:
-            return make_unique<BresenhamLineAlgorithm>();
+            return make_unique<DDALineAlgorithm>();
         case 2:
-            return make_unique<ParametricLineAlgorithm>();
+            return make_unique<BresenhamLineAlgorithm>();
         case 3:
+            return make_unique<ParametricLineAlgorithm>();
+        case 4:
             return make_unique<ParametricLineAlgorithm>(); // Colored Parametric
 
         // Circle Drawing Algorithms
-        case 4:
-            return make_unique<CircleCartesianAlgorithm>();
         case 5:
-            return make_unique<CirclePolarAlgorithm>();
+            return make_unique<CircleCartesianAlgorithm>();
         case 6:
-            return make_unique<CirclePolarIterativeAlgorithm>();
+            return make_unique<CirclePolarAlgorithm>();
         case 7:
-            return make_unique<CircleMidPointDDAAlgorithm>();
+            return make_unique<CirclePolarIterativeAlgorithm>();
         case 8:
+            return make_unique<CircleMidPointDDAAlgorithm>();
+        case 9:
             return make_unique<CircleMidPointDDAModifiedAlgorithm>();
 
         // Curve Drawing Algorithms
-        case 9:
-            return make_unique<QuadraticCurveAlgorithm>();
         case 10:
-            return make_unique<BezierCurveAlgorithm>();
+            return make_unique<QuadraticCurveAlgorithm>();
         case 11:
-            return make_unique<FloodFillAlgorithm>();
+            return make_unique<BezierCurveAlgorithm>();
         case 12:
-            return make_unique<HermiteCurveAlgorithm>();
+            return make_unique<FloodFillAlgorithm>();
         case 13:
+            return make_unique<HermiteCurveAlgorithm>();
+        case 14:
             return make_unique<CardinalSplineAlgorithm>();
 
         // Ellipse Drawing Algorithms
-        case 14:
-            return make_unique<EllipseCartesianAlgorithm>();
         case 15:
-            return make_unique<EllipsePolarAlgorithm>();
+            return make_unique<EllipseCartesianAlgorithm>();
         case 16:
-            return make_unique<EllipsePolar2Algorithm>();
+            return make_unique<EllipsePolarAlgorithm>();
         case 17:
-            return make_unique<EllipseMidPointAlgorithm>();
+            return make_unique<EllipsePolar2Algorithm>();
         case 18:
-            return make_unique<EllipseMidPointDDAAlgorithm>();
+            return make_unique<EllipseMidPointAlgorithm>();
         case 19:
+            return make_unique<EllipseMidPointDDAAlgorithm>();
+        case 20:
             return make_unique<CircleQuarterLineFilling>(); // Circle Quarter Line Filling
-        // Special Cases
-        case 20: // Clear Canvas - handled in GUI
-            return nullptr;
-
+        case 21:
+            return make_unique<ConvexFill>();
         default:
             return nullptr;
         }
