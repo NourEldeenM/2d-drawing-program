@@ -9,20 +9,20 @@ struct Point
     int x, y;
 };
 
-inline void DrawCirclePoints(Point center, Point p, std::vector<Point> &points)
+inline void DrawCirclePoints(const Point& center, const Point& p, const Color& color, std::vector<std::pair<Point, Color>>& result)
 {
     int dx[] = {p.x, -p.x, p.x, -p.x, p.y, -p.y, p.y, -p.y};
     int dy[] = {p.y, p.y, -p.y, -p.y, p.x, p.x, -p.x, -p.x};
     for (int i = 0; i < 8; i++)
-        points.push_back({center.x + dx[i], center.y + dy[i]});
+        result.push_back({{center.x + dx[i], center.y + dy[i]}, color});
 }
 
-inline void DrawEllipsePoints(Point center, Point p, std::vector<Point> &points)
+inline void DrawEllipsePoints(const Point& center, const Point& p, const Color& color, std::vector<std::pair<Point, Color>>& result)
 {
     int dx[] = {p.x, -p.x, p.x, -p.x};
     int dy[] = {p.y, p.y, -p.y, -p.y};
     for (int i = 0; i < 4; i++)
-        points.push_back({center.x + dx[i], center.y + dy[i]});
+        result.push_back({{center.x + dx[i], center.y + dy[i]},color});
 }
 
 class DrawingAlgorithm

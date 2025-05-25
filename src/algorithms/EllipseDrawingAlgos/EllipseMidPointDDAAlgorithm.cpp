@@ -20,9 +20,9 @@ public:
         int x = 0, y = b;
         int aSq = a * a, bSq = b * b;
         double d = bSq - aSq * b + 0.25 * aSq;
-        vector<Point> points;
-        DrawEllipsePoints(center, {x, y}, points);
         int dx = (bSq << 1) * x, dy = (aSq << 1) * y;
+        Color color = drawingColors.empty() ? BLACK : drawingColors[0];
+        DrawEllipsePoints(center, {x, y}, color, result);
         while(dx < dy){
             double d = (x + 1.0) * (x + 1.0) / aSq + (y - 0.5) * (y - 0.5) / bSq - 1;
             if (d > 0)
@@ -32,7 +32,7 @@ public:
             dx += (bSq << 1);
             d += dx + bSq;
             ++x;
-            DrawEllipsePoints(center, {x, y}, points);
+            DrawEllipsePoints(center, {x, y}, color, result);
         }
         d = (bSq * (x + 0.5) * (x + 0.5) + aSq * (y - 1) * (y - 1) - aSq * bSq);
         while(y >= 0){
@@ -44,10 +44,8 @@ public:
             dy -= (aSq << 1);
             d += aSq - dy;
             --y;
-            DrawEllipsePoints(center, {x, y}, points);
+            DrawEllipsePoints(center, {x, y}, color, result);
         }
-        Color color = drawingColors.empty() ? BLACK : drawingColors[0];
-        for (const auto& p : points) result.push_back({p, color});
         return result;
     }
 };

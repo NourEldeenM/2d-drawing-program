@@ -19,17 +19,15 @@ public:
         Point point = pts[1];
         int radius = static_cast<int>(sqrt(pow(point.x - center.x, 2) + pow(point.y - center.y, 2)));
         int x = 0, y = radius;
-        vector<Point> points;
-        DrawCirclePoints(center, {x, y}, points);
+        Color color = drawingColors.empty() ? BLACK : drawingColors[0];
+        DrawCirclePoints(center, {x, y}, color, result);
         while (x < y){
             double d = (x + 1) * (x + 1) + (y - 0.5) * (y - 0.5) - radius * radius;
             x++;
             if (d > 0)
                 y--;
-            DrawCirclePoints(center, {x, y}, points);
+            DrawCirclePoints(center, {x, y}, color, result);
         }
-        Color color = drawingColors.empty() ? BLACK : drawingColors[0];
-        for (const auto& p : points) result.push_back({p, color});
         return result;
     }
 };
