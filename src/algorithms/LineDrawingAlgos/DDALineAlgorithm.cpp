@@ -3,6 +3,9 @@
 #include <cmath>
 using namespace std;
 
+#ifndef DDALINEALGORITHM_H
+#define DDALINEALGORITHM_H
+
 class DDALineAlgorithm : public DrawingAlgorithm
 {
 public:
@@ -81,3 +84,5 @@ public:
         return outputPoints;
     }
 };
+
+#endif
