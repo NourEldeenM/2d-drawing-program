@@ -24,18 +24,15 @@ public:
         double thetaInc = 1.0 / radius;
         double sinTheta = sin(thetaInc), cosTheta = cos(thetaInc);
         double x = radius, y = 0;
-        vector<Point> points;
-        DrawCirclePoints(center, {static_cast<int>(x), static_cast<int>(y)}, points);
+        Color color = drawingColors.empty() ? BLACK : drawingColors[0];
+        DrawCirclePoints(center, {static_cast<int>(x), static_cast<int>(y)}, color, result);
         while (x > y)
         {
             double temp = x * cosTheta - y * sinTheta;
             y = x * sinTheta + y * cosTheta;
             x = temp;
-            DrawCirclePoints(center, {static_cast<int>(round(x)), static_cast<int>(round(y))}, points);
+            DrawCirclePoints(center, {static_cast<int>(round(x)), static_cast<int>(round(y))}, color, result);
         }
-        Color color = drawingColors.empty() ? BLACK : drawingColors[0];
-        for (const auto &p : points)
-            result.push_back({p, color});
         return result;
     }
 };

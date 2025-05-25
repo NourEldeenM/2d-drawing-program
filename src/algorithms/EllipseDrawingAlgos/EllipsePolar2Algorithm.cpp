@@ -20,16 +20,14 @@ public:
         double thetaInc = 1.0 / max(a, b);
         double sinTheta = sin(thetaInc), cosTheta = cos(thetaInc);
         double x = a, y = 0;
-        vector<Point> points;
-        DrawEllipsePoints(center, {static_cast<int>(x), static_cast<int>(y)}, points);
+        Color color = drawingColors.empty() ? BLACK : drawingColors[0];
+        DrawEllipsePoints(center, {static_cast<int>(x), static_cast<int>(y)}, color, result);
         while (x > 0) {
             double temp = x * cosTheta - (y / b) * a * sinTheta;
             y = (x / a) * b * sinTheta + y * cosTheta;
             x = temp;
-            DrawEllipsePoints(center, {static_cast<int>(round(x)), static_cast<int>(round(y))}, points);
+            DrawEllipsePoints(center, {static_cast<int>(round(x)), static_cast<int>(round(y))}, color, result);
         }
-        Color color = drawingColors.empty() ? BLACK : drawingColors[0];
-        for (const auto& p : points) result.push_back({p, color});
         return result;
     }
 };

@@ -17,21 +17,19 @@ public:
         int a = abs(p1.x - center.x);
         int b = abs(p2.y - center.y);
         int x = 0, y = b;
-        vector<Point> points;
-        DrawEllipsePoints(center, {x, y}, points);
+        Color color = drawingColors.empty() ? BLACK : drawingColors[0];
+        DrawEllipsePoints(center, {x, y}, color, result);
         while (x < a){
             ++x;
             y = round(sqrt((1.0 - (double)(x * x) / (a * a))) * b);
-            DrawEllipsePoints(center, {x, y}, points);
+            DrawEllipsePoints(center, {x, y}, color, result);
         }
         x = a, y = 0;
         while (y < b){
             ++y;
             x = round(sqrt((1.0 - (double)(y * y) / (b * b))) * a);
-            DrawEllipsePoints(center, {x, y}, points);
+            DrawEllipsePoints(center, {x, y}, color, result);
         }
-        Color color = drawingColors.empty() ? BLACK : drawingColors[0];
-        for (const auto& p : points) result.push_back({p, color});
         return result;
     }
 };
