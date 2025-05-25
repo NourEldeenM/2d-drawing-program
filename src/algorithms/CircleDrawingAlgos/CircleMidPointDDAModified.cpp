@@ -5,6 +5,9 @@
 
 using namespace std;
 
+#ifndef CIRCLE_MID_POINT_DDA_MODIFIED_ALGORITHM_CPP
+#define CIRCLE_MID_POINT_DDA_MODIFIED_ALGORITHM_CPP
+
 class CircleMidPointDDAModifiedAlgorithm : public DrawingAlgorithm
 {
 public:
@@ -44,3 +47,5 @@ public:
         return result;
     }
 };
+
+#endif // CIRCLE_MID_POINT_DDA_MODIFIED_ALGORITHM_CPP
