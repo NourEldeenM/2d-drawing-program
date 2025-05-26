@@ -2,9 +2,55 @@
 #include <algorithm>
 #include <cmath>
 #include <vector>
-#include "Point.cpp"
-#include "LineDrawing.cpp"
 using namespace std;
+
+struct Point {
+    int x, y;
+    Point(int x, int y) : x(x), y(y) {}
+    Point() : x(0), y(0) {}
+};
+
+
+void DrawLineMidPointDDA(HDC hdc, int x1, int y1, int x2, int y2, COLORREF color) {
+    if (x1 > x2) {
+        swap(x1, x2);
+        swap(y1, y2);
+    }
+
+    int dx = x2 - x1, dy = y2 - y1;
+    int yStep = (dy < 0) ? -1 : 1;
+    dy = abs(dy);
+    dx = abs(dx);
+    int d = 2 * dy - dx;
+
+    int x = x1, y = y1;
+    SetPixel(hdc, x, y, color);
+
+    if (dx >= dy) {
+        while (x < x2) {
+            x++;
+            if (d > 0) {
+                y += yStep;
+                d -= 2 * dx;
+            }
+            d += 2 * dy;
+            SetPixel(hdc, x, y, color);
+        }
+    } 
+    else {
+        d = 2 * dx - dy;
+        while ((yStep > 0 && y < y2) || (yStep < 0 && y > y2)) {
+            y += yStep;
+            if (d > 0) {
+                x++;
+                d -= 2 * dy;
+            }
+            d += 2 * dx;
+            SetPixel(hdc, x, y, color);
+        }
+    }
+}
+
 
 void EdgeToTable(Point p1, Point p2, vector<pair<int,int>>& table){
     if (p1.y == p2.y)
