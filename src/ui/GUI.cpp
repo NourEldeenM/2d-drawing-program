@@ -1,11 +1,15 @@
 #include <raylib.h>
 #include <vector>
 #include <iostream>
+#include <filesystem>
+#include <fstream>
 #include <map>
 #include "../algorithms/DrawingAlgorithm.h"
 #include "../algorithms/AlgorithmFactory.h"
 #include "MenuItem.h"
 #include "MenuConfig.h"
+
+namespace fs = filesystem;
 
 using namespace std;
 
@@ -21,7 +25,7 @@ private:
 
     vector<MenuItem> menuItems;
     bool menuExpanded;
-    Rectangle menuButton;
+    Rectangle menuButton, loadButton, saveButton;
     MenuItem *activeSubmenu;
 
 public:
@@ -34,6 +38,8 @@ public:
 
         menuExpanded = false;
         menuButton = {10, 10, 120, 40};
+        loadButton = {140, 10, 120, 40};
+        saveButton = {280, 10, 120, 40};
 
         menuItems = MenuConfig::createMainMenu();
         activeSubmenu = nullptr;
@@ -66,6 +72,10 @@ public:
         if (handleMenuButtonClick(mousePoint))
             return;
         if (handleMenuOptionSelection(mousePoint))
+            return;
+        if (handleLoadButtonClick(mousePoint))
+            return;
+        if (handleSaveButtonClick(mousePoint))
             return;
         handleCanvasClick(mousePoint);
     }
@@ -197,17 +207,24 @@ public:
 
         drawShapes();
         drawInputPoints();
-        drawMenuButton();
         if (menuExpanded)
             drawMenuOptions();
+        drawButtons();
         EndDrawing();
     }
 
-    void drawMenuButton()
+    void drawButton(Rectangle button, char *text, Color bgColor, Color borderTextColor)
     {
-        DrawRectangleRec(menuButton, SKYBLUE);
-        DrawRectangleLinesEx(menuButton, 2, DARKBLUE);
-        DrawText("Menu", menuButton.x + 30, menuButton.y + 10, 20, DARKBLUE);
+        DrawRectangleRec(button, bgColor);
+        DrawRectangleLinesEx(button, 2, borderTextColor);
+        DrawText(text, button.x + 30, button.y + 10, 20, borderTextColor);
+    }
+
+    void drawButtons()
+    {
+        drawButton(menuButton, (char *)"MENU", SKYBLUE, DARKBLUE);
+        drawButton(loadButton, (char *)"LOAD", LIGHTGRAY, DARKGRAY);
+        drawButton(saveButton, (char *)"SAVE", LIGHTGRAY, DARKGRAY);
     }
 
     void drawMenuOptions()
@@ -257,5 +274,89 @@ public:
     {
         for (const Point &p : inputPoints)
             DrawCircle(p.x, p.y, 3, RED);
+    }
+
+    bool handleLoadButtonClick(const Vector2 &mousePoint)
+    {
+        if (CheckCollisionPointRec(mousePoint, loadButton) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+        {
+            fs::path filePath = fs::current_path() / "saved_drawings";
+            ifstream inFile(filePath, ios::binary);
+
+            if (!inFile)
+            {
+                cout << "Error: Could not open file for reading\n";
+                return false;
+            }
+
+            // // Clear existing shapes
+            // drawnShapes.clear();
+
+            // Read number of shapes
+            size_t numShapes;
+            inFile.read(reinterpret_cast<char *>(&numShapes), sizeof(numShapes));
+
+            // Read each shape
+            for (size_t i = 0; i < numShapes; i++)
+            {
+                // Read number of points in this shape
+                size_t numPoints;
+                inFile.read(reinterpret_cast<char *>(&numPoints), sizeof(numPoints));
+
+                // Create a new shape
+                vector<pair<Point, Color>> shape;
+                shape.reserve(numPoints);
+
+                // Read each point and its color
+                for (size_t j = 0; j < numPoints; j++)
+                {
+                    Point p;
+                    Color c;
+                    inFile.read(reinterpret_cast<char *>(&p), sizeof(Point));
+                    inFile.read(reinterpret_cast<char *>(&c), sizeof(Color));
+                    shape.emplace_back(p, c);
+                }
+
+                drawnShapes.push_back(std::move(shape));
+            }
+
+            inFile.close();
+            cout << "Loaded drawing from: " << filePath << '\n';
+            return true;
+        }
+        return false;
+    }
+
+    bool handleSaveButtonClick(const Vector2 &mousePoint)
+    {
+        if (CheckCollisionPointRec(mousePoint, saveButton) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+        {
+            fs::path filePath = fs::current_path() / "saved_drawings";
+            ofstream outFile(filePath, ios::binary);
+
+            // Write number of shapes
+            size_t numShapes = drawnShapes.size();
+            outFile.write(reinterpret_cast<const char *>(&numShapes), sizeof(numShapes));
+
+            // Write each shape
+            for (const auto &shape : drawnShapes)
+            {
+                // Write number of points in this shape
+                size_t numPoints = shape.size();
+                outFile.write(reinterpret_cast<const char *>(&numPoints), sizeof(numPoints));
+
+                // Write each point and its color
+                for (const auto &point : shape)
+                {
+                    outFile.write(reinterpret_cast<const char *>(&point.first), sizeof(Point));
+                    outFile.write(reinterpret_cast<const char *>(&point.second), sizeof(Color));
+                }
+            }
+
+            outFile.close();
+            cout << "Saved drawing to: " << filePath << '\n';
+            return true;
+        }
+        return false;
     }
 };
