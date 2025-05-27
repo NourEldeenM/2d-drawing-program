@@ -21,6 +21,7 @@
 #include "CircleQuarterFilling/CircleQuarterLineFilling.cpp"
 #include "FillingAlgos/ConvexFillAlgorithm.cpp"
 #include "FillingAlgos/GeneralFillAlgorithm.cpp"
+#include "FillingAlgos/FillSquareHermitCurve.cpp"
 #include <memory>
 
 using namespace std;
@@ -86,6 +87,8 @@ public:
             return make_unique<ConvexFill>();
         case 22:
             return make_unique<GeneralFill>();
+        case 23:
+            return make_unique<FillSquareHermitCurve>();
         default:
             return nullptr;
         }

@@ -3,6 +3,9 @@
 #include <cmath>
 using namespace std;
 
+#ifndef HERMITECURVEALGORITHM_H
+#define HERMITECURVEALGORITHM_H
+
 class HermiteCurveAlgorithm : public DrawingAlgorithm
 {
 public:
@@ -61,3 +64,5 @@ public:
         return result;
     }
 };
+
+#endif

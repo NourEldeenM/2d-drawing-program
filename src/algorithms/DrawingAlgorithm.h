@@ -7,6 +7,12 @@
 struct Point
 {
     int x, y;
+    Point():x(0),y(0){
+
+    };
+    Point(int x,int y):x(x),y(y){
+
+    };
 };
 
 inline void DrawCirclePoints(const Point& center, const Point& p, const Color& color, std::vector<std::pair<Point, Color>>& result)

@@ -55,6 +55,7 @@ public:
             MenuItem("Flood Fill", 12),
             MenuItem("Convex Fill", 21),
             MenuItem("General Fill", 22),
+            MenuItem("Square Fill Using Hermit Curve", 23),
         };
 
         // Circle Quarter Filling Algorithms
