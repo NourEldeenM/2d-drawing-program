@@ -5,16 +5,17 @@
 
 using namespace std;
 
-class ConvexFill : public DrawingAlgorithm
+class GeneralFill : public DrawingAlgorithm
 {
 private:
-    struct EdgeEntry
+    struct Node
     {
-        int xLeft = INT_MAX;
-        int xRight = INT_MIN;
+        double x, slopeInv;
+        int y;
+        Node(double x, double slopeInv, int y) : x(x), slopeInv(slopeInv), y(y) {}
     };
 
-    vector<EdgeEntry> edgeTable;
+    vector<vector<Node>> edgeTable;
 
     void pushLinesToResult(const vector<vector<pair<Point, Color>>> &lineResults,
                            vector<pair<Point, Color>> &result)
@@ -39,11 +40,11 @@ private:
         edgeTable.resize(maxY - minY + 1);
 
         // Initialize edge table entries
-        for (auto &entry : edgeTable)
-        {
-            entry.xLeft = INT_MAX;
-            entry.xRight = INT_MIN;
-        }
+        // for (auto &entry : edgeTable)
+        // {
+        //     entry.xLeft = INT_MAX;
+        //     entry.xRight = INT_MIN;
+        // }
     }
 
     void polygonToTable(const vector<Point> &pts)
@@ -70,19 +71,10 @@ private:
         if (v1.y > v2.y)
             swap(v1, v2);
 
+        int tableIndex = v1.y - minY;
         double x = v1.x;
         double slopeInv = static_cast<double>(v2.x - v1.x) / (v2.y - v1.y);
-
-        for (int y = v1.y; y < v2.y; y++)
-        {
-            int tableIndex = y - minY;
-            if (tableIndex >= 0 && tableIndex < edgeTable.size())
-            {
-                edgeTable[tableIndex].xLeft = min(edgeTable[tableIndex].xLeft, static_cast<int>(ceil(x)));
-                edgeTable[tableIndex].xRight = max(edgeTable[tableIndex].xRight, static_cast<int>(floor(x)));
-            }
-            x += slopeInv;
-        }
+        edgeTable[tableIndex].push_back(Node(x, slopeInv, v2.y - minY));
     }
 
     vector<vector<pair<Point, Color>>> fillPolygon(const Color &fillColor, int minY)
@@ -90,28 +82,55 @@ private:
         DDALineAlgorithm lineDrawer;
         vector<vector<pair<Point, Color>>> lines;
 
-        for (size_t i = 0; i < edgeTable.size(); i++)
-        {
-            if (edgeTable[i].xLeft <= edgeTable[i].xRight)
-            {
-                Point p1{edgeTable[i].xLeft, static_cast<int>(i + minY)};
-                Point p2{edgeTable[i].xRight, static_cast<int>(i + minY)};
+        // for (size_t i = 0; i < edgeTable.size(); i++)
+        // {
+        //     if (edgeTable[i].xLeft <= edgeTable[i].xRight)
+        //     {
+        //         Point p1{edgeTable[i].xLeft, static_cast<int>(i + minY)};
+        //         Point p2{edgeTable[i].xRight, static_cast<int>(i + minY)};
+        //         vector<Point> points = {p1, p2};
+        //         lines.push_back(lineDrawer.draw(points, {fillColor}));
+        //     }
+        // }
+        int y = 0;
+        while (y < edgeTable.size() && edgeTable[y].empty())
+            y++; // Find the first non-empty row
+        auto active = edgeTable[y];
+        while(!active.empty()){
+            sort(active.begin(), active.end(), [](const Node &a, const Node &b) {
+                return a.x < b.x;
+            });
+            for (size_t i = 0; i < active.size(); i += 2){
+                Point p1{ceil(active[i].x),(y + minY)};
+                Point p2{floor(active[i + 1].x),(y + minY)};
                 vector<Point> points = {p1, p2};
                 lines.push_back(lineDrawer.draw(points, {fillColor}));
             }
+            y++;
+            vector<Node> nextActive;
+            for (auto& node : active){
+                node.x += node.slopeInv; // Update x position based on slope
+                if (node.y > y) // Only keep nodes that are still valid
+                    nextActive.push_back(node);
+            }
+            active = nextActive;
+            if (y < edgeTable.size()) 
+                for (const auto &node : edgeTable[y]) 
+                    active.push_back(node); // Add new nodes from the current row
+
         }
         return lines;
     }
 
 public:
-    ConvexFill()
+    GeneralFill()
     {
-        setName((char *)"Convex Fill");
-        setRequiredPoints(4);
+        setName((char *)"General Fill");
+        setRequiredPoints(6);
     }
 
-    ConvexFill(int numOfPolygonPoints){
-        setName((char *)"Convex Fill");
+    GeneralFill(int numOfPolygonPoints){
+        setName((char *)"General Fill");
         setRequiredPoints(numOfPolygonPoints);
     }
 

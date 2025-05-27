@@ -170,6 +170,12 @@ public:
                 drawingColor.pop_back();
             drawingColor.push_back(GREEN);
         }
+        else if (i == 22)
+        { // General Fill
+            if (drawingColor.size() > 1)
+                drawingColor.pop_back();
+            drawingColor.push_back(YELLOW);
+        }
 
         // Create new algorithm
         auto newAlgorithm = AlgorithmFactory::createAlgorithm(i);

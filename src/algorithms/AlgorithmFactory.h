@@ -20,6 +20,7 @@
 #include "EllipseDrawingAlgos/EllipseMidPointDDAAlgorithm.cpp"
 #include "CircleQuarterFilling/CircleQuarterLineFilling.cpp"
 #include "FillingAlgos/ConvexFillAlgorithm.cpp"
+#include "FillingAlgos/GeneralFillAlgorithm.cpp"
 #include <memory>
 
 using namespace std;
@@ -79,9 +80,12 @@ public:
         case 19:
             return make_unique<EllipseMidPointDDAAlgorithm>();
         case 20:
-            return make_unique<CircleQuarterLineFilling>(); // Circle Quarter Line Filling
+            return make_unique<CircleQuarterLineFilling>();
+        // polygon Filling Algorithms
         case 21:
             return make_unique<ConvexFill>();
+        case 22:
+            return make_unique<GeneralFill>();
         default:
             return nullptr;
         }
