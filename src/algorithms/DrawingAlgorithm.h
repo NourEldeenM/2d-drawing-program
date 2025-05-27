@@ -13,6 +13,12 @@ struct Point
     Point(int x,int y):x(x),y(y){
 
     };
+
+    bool operator < (const Point &other){
+        if(x!=other.x)
+            return x<other.x;
+        return y < other.y;
+    }
 };
 
 inline void DrawCirclePoints(const Point& center, const Point& p, const Color& color, std::vector<std::pair<Point, Color>>& result)
