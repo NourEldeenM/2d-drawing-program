@@ -6,6 +6,7 @@
 			"type": "shell",
 			"command": "g++",
 			"args": [
+				"-w",
 				"-o",
 				"game.exe",
 				"src/main.cpp",
@@ -25,6 +26,7 @@
 				"src/algorithms/EllipseDrawingAlgos/EllipsePolarAlgorithm.cpp",
 
 				"src/algorithms/FillingAlgos/FloodFillAlgorithm.cpp",
+				"src/algorithms/FillingAlgos/FillSquareHermitCurve.cpp",
 
 				"src/algorithms/LineDrawingAlgos/BresenhamLineAlgorithm.cpp",
 				"src/algorithms/LineDrawingAlgos/DDALineAlgorithm.cpp",
@@ -34,6 +36,7 @@
 				"src/algorithms/QuadAndCubicCurvesAlgos/CardinalSplineCurve.cpp",
 				"src/algorithms/QuadAndCubicCurvesAlgos/HermiteCurveAlgorithm.cpp",
 				"src/algorithms/QuadAndCubicCurvesAlgos/QuadraticCurveAlgorithm.cpp",
+
 				"-I",
 				"C:\\raylib\\include",
 				"-L",
