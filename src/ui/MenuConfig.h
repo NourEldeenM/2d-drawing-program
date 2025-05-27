@@ -52,7 +52,9 @@ public:
         // Filling Algorithms
         menuItems[4].subItems = {
             MenuItem("Flood Fill", 12),
-            MenuItem("Convex Fill", 21)};
+            MenuItem("Convex Fill", 21),
+            MenuItem("General Fill", 22),
+        };
 
         // Circle Quarter Filling Algorithms
         menuItems[5].subItems = {

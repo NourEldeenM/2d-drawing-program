@@ -2,7 +2,6 @@
 #include <algorithm>
 #include <cmath>
 #include <vector>
-#include "Point.cpp"
 using namespace std;
 
 struct Point {
