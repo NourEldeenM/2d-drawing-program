@@ -16,7 +16,7 @@ public:
         Point p1 = pts[1], p2 = pts[2];
         int a = abs(p1.x - center.x);
         int b = abs(p2.y - center.y);
-        Color color = drawingColors.empty() ? BLACK : drawingColors[0];
+        Color color = drawingColors.empty() ? BLACK : drawingColors.back();
         for (double theta = 0; theta < M_PI / 2; theta += 0.001){
             int x = round(a * cos(theta));
             int y = round(b * sin(theta));

@@ -144,7 +144,7 @@ public:
         vector<pair<Point, Color>> result;
 
         // Draw polygon outline
-        vector<vector<pair<Point, Color>>> outlineResults = drawPolygon(pts, {drawingColors[0]});
+        vector<vector<pair<Point, Color>>> outlineResults = drawPolygon(pts, {drawingColors.back()});
         pushLinesToResult(outlineResults, result);
 
         // Find minimum Y coordinate

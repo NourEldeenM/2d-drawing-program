@@ -31,7 +31,7 @@ public:
         endB = c2.b;
     }
 
-    vector<pair<Point, Color>> draw(vector<Point> &inputPoints, vector<Color> drawingColor = {BLACK}) override
+    vector<pair<Point, Color>> draw(vector<Point> &inputPoints, vector<Color> drawingColors = {BLACK}) override
     {
         vector<pair<Point, Color>> outputPoints;
         if (inputPoints.size() < 2)
@@ -44,7 +44,7 @@ public:
         int x2 = inputPoints[1].x;
         int y2 = inputPoints[1].y;
 
-        setColors(drawingColor.back(), drawingColor[1]);
+        setColors(drawingColors.back(), drawingColors.back());
 
         int alpha1 = x2 - x1;
         int alpha2 = y2 - y1;
@@ -54,7 +54,7 @@ public:
 
         // Add the first point
         Point firstPoint = {x1, y1};
-        outputPoints.push_back({firstPoint, drawingColor.back()});
+        outputPoints.push_back({firstPoint, drawingColors.back()});
 
         double step = 1.0 / std::max(abs(alpha1), abs(alpha2));
         for (double t = step; t <= 1; t += step)

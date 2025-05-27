@@ -20,7 +20,7 @@ public:
         double thetaInc = 1.0 / max(a, b);
         double sinTheta = sin(thetaInc), cosTheta = cos(thetaInc);
         double x = a, y = 0;
-        Color color = drawingColors.empty() ? BLACK : drawingColors[0];
+        Color color = drawingColors.empty() ? BLACK : drawingColors.back();
         DrawEllipsePoints(center, {static_cast<int>(x), static_cast<int>(y)}, color, result);
         while (x > 0) {
             double temp = x * cosTheta - (y / b) * a * sinTheta;

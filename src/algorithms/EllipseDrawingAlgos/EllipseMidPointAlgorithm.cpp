@@ -20,7 +20,7 @@ public:
         int x = 0, y = b;
         int aSq = a * a, bSq = b * b;
         int dx = (bSq << 1) * x, dy = (aSq << 1) * y;
-        Color color = drawingColors.empty() ? BLACK : drawingColors[0];
+        Color color = drawingColors.empty() ? BLACK : drawingColors.back();
         DrawEllipsePoints(center, {x, y}, color, result);
         while(dx < dy){
             double d = (x + 1.0) * (x + 1.0) / aSq + (y - 0.5) * (y - 0.5) / bSq - 1;

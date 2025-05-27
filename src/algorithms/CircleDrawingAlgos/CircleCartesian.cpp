@@ -23,7 +23,7 @@ public:
         Point point = pts[1];
         int radius = static_cast<int>(sqrt(pow(point.x - center.x, 2) + pow(point.y - center.y, 2)));
         int x = 0, y = radius;
-        Color color = drawingColors.empty() ? BLACK : drawingColors[0];
+        Color color = drawingColors.empty() ? BLACK : drawingColors.back();
         DrawCirclePoints(center, {x, y}, color, result);
         while (x < y)
         {

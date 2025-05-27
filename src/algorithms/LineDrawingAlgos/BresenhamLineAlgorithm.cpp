@@ -15,7 +15,7 @@ public:
         setRequiredPoints(2); // Start and end points
     }
 
-    vector<pair<Point, Color>> draw(vector<Point> &inputPoints, vector<Color> drawingColor = {BLACK}) override
+    vector<pair<Point, Color>> draw(vector<Point> &inputPoints, vector<Color> drawingColors = {BLACK}) override
     {
         std::vector<pair<Point, Color>> outputPoints;
 
@@ -36,7 +36,7 @@ public:
 
         // Add first point
         Point p = {x, y};
-        outputPoints.push_back({p, drawingColor.back()});
+        outputPoints.push_back({p, drawingColors.back()});
 
         int xinc = (x1 < x2) ? 1 : -1;
         int yinc = (y1 < y2) ? 1 : -1;
@@ -59,7 +59,7 @@ public:
                 }
                 x += xinc;
                 Point p = {x, y};
-                outputPoints.push_back({p, drawingColor.back()});
+                outputPoints.push_back({p, drawingColors.back()});
             }
         }
         else
@@ -80,7 +80,7 @@ public:
                 }
                 y += yinc;
                 Point p = {x, y};
-                outputPoints.push_back({p, drawingColor.back()});
+                outputPoints.push_back({p, drawingColors.back()});
             }
         }
 

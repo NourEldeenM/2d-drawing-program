@@ -56,7 +56,7 @@ public:
         requiredPoints = rp;
     }
 
-    virtual std::vector<std::pair<Point, Color>> draw(std::vector<Point> &inputPoints, std::vector<Color> drawingColors = {BLACK}) = 0;
+    virtual std::vector<std::pair<Point, Color>> draw(std::vector<Point> &inputPoints, std::vector<Color> drawingColors) = 0;
     virtual ~DrawingAlgorithm() = default;
 };
 

@@ -63,7 +63,7 @@ public:
         double T0x = c1 * (pts[2].x - pts[0].x);
         double T0y = c1 * (pts[2].y - pts[0].y);
 
-        Color color = drawingColors.empty() ? BLACK : drawingColors[0];
+        Color color = drawingColors.empty() ? BLACK : drawingColors.back();
 
         for (int i = 2; i < n - 1; i++)
         {

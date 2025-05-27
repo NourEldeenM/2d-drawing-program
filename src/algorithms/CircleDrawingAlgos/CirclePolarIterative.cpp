@@ -24,7 +24,7 @@ public:
         double thetaInc = 1.0 / radius;
         double sinTheta = sin(thetaInc), cosTheta = cos(thetaInc);
         double x = radius, y = 0;
-        Color color = drawingColors.empty() ? BLACK : drawingColors[0];
+        Color color = drawingColors.empty() ? BLACK : drawingColors.back();
         DrawCirclePoints(center, {static_cast<int>(x), static_cast<int>(y)}, color, result);
         while (x > y)
         {

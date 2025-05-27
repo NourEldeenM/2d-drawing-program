@@ -20,7 +20,7 @@ public:
             double y = pow(1 - t, 2) * p0.y + 2 * (1 - t) * t * p1.y + pow(t, 2) * p2.y;
             points.push_back({static_cast<int>(round(x)), static_cast<int>(round(y))});
         }
-        Color color = drawingColors.empty() ? BLACK : drawingColors[0];
+        Color color = drawingColors.empty() ? BLACK : drawingColors.back();
         for (const auto& p : points) result.push_back({p, color});
         return result;
     }

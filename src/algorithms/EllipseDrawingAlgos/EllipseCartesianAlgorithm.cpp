@@ -17,7 +17,7 @@ public:
         int a = abs(p1.x - center.x);
         int b = abs(p2.y - center.y);
         int x = 0, y = b;
-        Color color = drawingColors.empty() ? BLACK : drawingColors[0];
+        Color color = drawingColors.empty() ? BLACK : drawingColors.back();
         DrawEllipsePoints(center, {x, y}, color, result);
         while (x < a){
             ++x;

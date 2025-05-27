@@ -229,11 +229,6 @@ public:
     {
         BeginDrawing();
         ClearBackground(RAYWHITE);
-        if (!drawingColor.empty()) {
-            DrawRectangle(screenWidth - 50, 10, 30, 30, drawingColor.back());
-            DrawRectangleLines(screenWidth - 50, 10, 30, 30, BLACK);
-            DrawText("Color", screenWidth - 100, 18, 20, DARKGRAY);
-        }
         drawShapes();
         drawInputPoints();
         if (menuExpanded)

@@ -60,13 +60,13 @@ public:
     //         addLine(center, {center.x + dx[idx] * x, center.y + dy[idx] * y}, points);
     //         addLine(center, {center.x + dx[idx] * y, center.y + dy[idx] * x}, points);
     //     }
-    //     Color color = drawingColors.empty() ? BLACK : drawingColors[0];
+    //     Color color = drawingColors.empty() ? BLACK : drawingColors.back();
     //     for (const auto &p : points)
     //         result.push_back(make_pair(p, color));
     //     return result;
     // }
     
-    vector<pair<Point, Color>> draw(vector<Point> &pts, vector<Color> drawingColors = {BLACK}) override{
+    vector<pair<Point, Color>> draw(vector<Point> &pts, vector<Color> drawingColors) override{
         Point center = pts[0];
         Point point = pts[1];
         auto result = CircleMidPointDDAModifiedAlgorithm().draw(pts, drawingColors);
