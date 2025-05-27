@@ -36,7 +36,7 @@ public:
 
         // Add first point
         Point p = {x, y};
-        outputPoints.push_back({p, drawingColor[0]});
+        outputPoints.push_back({p, drawingColor.back()});
 
         int xinc = (x1 < x2) ? 1 : -1;
         int yinc = (y1 < y2) ? 1 : -1;
@@ -59,7 +59,7 @@ public:
                 }
                 x += xinc;
                 Point p = {x, y};
-                outputPoints.push_back({p, drawingColor[0]});
+                outputPoints.push_back({p, drawingColor.back()});
             }
         }
         else
@@ -80,7 +80,7 @@ public:
                 }
                 y += yinc;
                 Point p = {x, y};
-                outputPoints.push_back({p, drawingColor[0]});
+                outputPoints.push_back({p, drawingColor.back()});
             }
         }
 

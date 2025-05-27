@@ -38,7 +38,7 @@ public:
 
         // Add first point
         Point p = {x1, y1};
-        outputPoints.push_back({p, drawingColor[0]});
+        outputPoints.push_back({p, drawingColor.back()});
 
         if (abs(dx) >= abs(dy))
         {
@@ -57,7 +57,7 @@ public:
                 x++;
                 y += m;
                 Point p = {x, Round(y)};
-                outputPoints.push_back({p, drawingColor[0]});
+                outputPoints.push_back({p, drawingColor.back()});
             }
         }
         else
@@ -77,7 +77,7 @@ public:
                 y++;
                 x += mi;
                 Point p = {Round(x), y};
-                outputPoints.push_back({p, drawingColor[0]});
+                outputPoints.push_back({p, drawingColor.back()});
             }
         }
 

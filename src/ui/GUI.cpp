@@ -58,6 +58,7 @@ public:
     {
         InitWindow(screenWidth, screenHeight, "2d drawing program");
         SetTargetFPS(60);
+        SetMouseCursor(MOUSE_CURSOR_CROSSHAIR);
         while (!WindowShouldClose())
         {
             handleInput();
@@ -85,6 +86,7 @@ public:
         if (CheckCollisionPointRec(mousePoint, menuButton) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
         {
             menuExpanded = !menuExpanded;
+            cout<<"menu button clicked\n";
             return true;
         }
         return false;
@@ -151,33 +153,50 @@ public:
             return;
         }
 
-        // Handle color modifications
-        if (i == 4)
-        { // Colored Parametric Line
+        // // Handle color modifications
+        // if (i == 4)
+        // { // Colored Parametric Line
+        //     if (drawingColor.size() > 1)
+        //         drawingColor.pop_back();
+        //     drawingColor.push_back(RED);
+        // }
+        // else if (i == 12)
+        // { // Flood Fill
+        //     if (drawingColor.size() > 1)
+        //         drawingColor.pop_back();
+        //     drawingColor.push_back(BLUE);
+        // }
+        // else if (i == 21)
+        // { // Convex Fill
+        //     if (drawingColor.size() > 1)
+        //         drawingColor.pop_back();
+        //     drawingColor.push_back(GREEN);
+        // }
+        // else if (i == 22)
+        // { // General Fill
+        //     if (drawingColor.size() > 1)
+        //         drawingColor.pop_back();
+        //     drawingColor.push_back(YELLOW);
+        // }
+        // else 
+        if (i >= 100 && i <= 106)
+        {
             if (drawingColor.size() > 1)
                 drawingColor.pop_back();
-            drawingColor.push_back(RED);
-        }
-        else if (i == 12)
-        { // Flood Fill
-            if (drawingColor.size() > 1)
-                drawingColor.pop_back();
-            drawingColor.push_back(BLUE);
-        }
-        else if (i == 21)
-        { // Convex Fill
-            if (drawingColor.size() > 1)
-                drawingColor.pop_back();
-            drawingColor.push_back(GREEN);
-        }
-        else if (i == 22)
-        { // General Fill
-            if (drawingColor.size() > 1)
-                drawingColor.pop_back();
-            drawingColor.push_back(YELLOW);
-        }
 
-        // Create new algorithm
+            switch (i)
+            {
+                case 100: drawingColor.push_back(BLACK); break;
+                case 101: drawingColor.push_back(RED); break;
+                case 102: drawingColor.push_back(BLUE); break;
+                case 103: drawingColor.push_back(GREEN); break;
+                case 104: drawingColor.push_back(YELLOW); break;
+                case 105: drawingColor.push_back(MAGENTA); break;
+                // case 106: drawingColor.push_back(CYAN); break;
+                default: drawingColor.push_back(BLACK); break;
+            }
+            cout << "Color changed\n";
+        }
         auto newAlgorithm = AlgorithmFactory::createAlgorithm(i);
         if (newAlgorithm)
         {
@@ -210,7 +229,11 @@ public:
     {
         BeginDrawing();
         ClearBackground(RAYWHITE);
-
+        if (!drawingColor.empty()) {
+            DrawRectangle(screenWidth - 50, 10, 30, 30, drawingColor.back());
+            DrawRectangleLines(screenWidth - 50, 10, 30, 30, BLACK);
+            DrawText("Color", screenWidth - 100, 18, 20, DARKGRAY);
+        }
         drawShapes();
         drawInputPoints();
         if (menuExpanded)
@@ -332,7 +355,7 @@ public:
         }
         return false;
     }
-
+    
     bool handleSaveButtonClick(const Vector2 &mousePoint)
     {
         if (CheckCollisionPointRec(mousePoint, saveButton) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
@@ -365,4 +388,5 @@ public:
         }
         return false;
     }
+
 };

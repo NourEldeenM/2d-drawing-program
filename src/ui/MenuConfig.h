@@ -17,6 +17,7 @@ public:
             MenuItem("Curves", -1),
             MenuItem("Fill", -1),
             MenuItem("CircleQuarterFill", -1),
+            MenuItem("Color", -1),
             MenuItem("Clear Canvas", 0)};
 
         // Line algorithms
@@ -59,6 +60,14 @@ public:
         // Circle Quarter Filling Algorithms
         menuItems[5].subItems = {
             MenuItem("Circle Quarter Line Fill", 20),
+        };
+        menuItems[6].subItems = {
+            MenuItem("Black", 100),
+            MenuItem("Red", 101),
+            MenuItem("Blue", 102),
+            MenuItem("Green", 103),
+            MenuItem("Yellow", 104),
+            MenuItem("Magenta", 105)
         };
         return menuItems;
     }
