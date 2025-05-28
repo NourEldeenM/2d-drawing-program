@@ -1,5 +1,6 @@
 #include <raylib.h>
 #include <vector>
+#include <queue>
 #include <iostream>
 #include <filesystem>
 #include <fstream>
@@ -21,7 +22,7 @@ private:
     vector<vector<pair<Point, Color>>> drawnShapes;
     int screenWidth;
     int screenHeight;
-    vector<Color> drawingColor;
+    deque<Color> drawingColor;
 
     vector<MenuItem> menuItems;
     bool menuExpanded;
@@ -182,7 +183,7 @@ public:
         if (i >= 100 && i <= 106)
         {
             if (drawingColor.size() > 1)
-                drawingColor.pop_back();
+                drawingColor.pop_front();
 
             switch (i)
             {
@@ -216,7 +217,7 @@ public:
                 inputPoints.push_back(p);
                 if (currentAlgorithm && inputPoints.size() >= currentAlgorithm->getRequiredPoints())
                 {
-                    vector<pair<Point, Color>> shape = currentAlgorithm->draw(inputPoints, drawingColor);
+                    vector<pair<Point, Color>> shape = currentAlgorithm->draw(inputPoints, vector<Color> (drawingColor.begin(),drawingColor.end()));
                     if (!shape.empty())
                         drawnShapes.push_back(shape); // Store the shape
                     inputPoints.clear();              // Reset for next line

@@ -22,8 +22,8 @@ public:
         int dx[] = {0, 0, 1, -1};
         int dy[] = {1, -1, 0, 0};
         Point start = pts[0];
-        Color borderColor = drawingColors.empty() ? BLACK : drawingColors.back();
-        Color fillColor = drawingColors.size() > 1 ? drawingColors[1] : BLACK;
+        Color borderColor = drawingColors.empty() ? BLACK : drawingColors.front();
+        Color fillColor = drawingColors.size() > 1 ? drawingColors.back() : BLACK;
         queue<Point> q;
         q.push(start);
         // Load the screen as an image once
