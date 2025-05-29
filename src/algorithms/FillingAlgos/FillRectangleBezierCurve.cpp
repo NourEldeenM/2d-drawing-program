@@ -3,6 +3,8 @@
 #include "../QuadAndCubicCurvesAlgos/BezierCurveAlgorithm.h"
 #include <algorithm>
 
+using namespace std;
+
 class FillRectangleBezierCurve : public DrawingAlgorithm {
 public:
     FillRectangleBezierCurve() {
@@ -13,16 +15,28 @@ public:
 
     vector<pair<Point, Color>> draw(vector<Point> &pts, vector<Color> drawingColors = {RED}) override {
         // ensure that first point is smallest
-        std::sort(pts.begin(), pts.end());
+        int minY = min(pts[0].y, pts[1].y);
+        int maxY = max(pts[0].y, pts[1].y);
+        int leftX = min(pts[0].x, pts[1].x);
+        int rightX = max(pts[0].x, pts[1].x);
 
         vector<pair<Point, Color>> outputPoints;
         BezierCurveAlgorithm curve;
 
-        vector<Point> p = {pts[0], Point(0, 0), Point(5, 5), pts[1]};
-        vector<pair<Point, Color>> curvePoints = curve.draw(p, drawingColors);
-        for (auto &&i : curvePoints) {
-            outputPoints.push_back(i);
+        for (int y = minY; y <= maxY; y++)
+        {
+            Point p1(leftX, y);
+            Point p2(rightX, y);
+
+            vector<Point> p = {p1, p1,p2, p2};
+            vector<pair<Point, Color>> curvePoints = curve.draw(p, drawingColors);
+            for (auto &&i : curvePoints) {
+                outputPoints.push_back(i);
+            }
+
         }
+        
+
         return outputPoints;
     }
 };
