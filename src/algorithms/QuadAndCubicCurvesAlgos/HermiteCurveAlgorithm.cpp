@@ -47,7 +47,9 @@ public:
         Cy[3] = 1 * p0.y + 0 * v1 + 0 * p3.y + 0 * v2;
 
         vector<Point> points;
-        for (double t = 0; t <= 1.0; t += 0.0009)
+
+        double stepTime=1.0/1500;
+        for (double t = 0; t <= 1.0; t += stepTime)
         {
             double t2 = t * t;
             double t3 = t2 * t;
