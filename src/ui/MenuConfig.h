@@ -56,6 +56,7 @@ public:
             MenuItem("Convex Fill", 21),
             MenuItem("General Fill", 22),
             MenuItem("Square Fill Using Hermit Curve", 23),
+            MenuItem("Rectangle Fill Using Bezier Curve", 24),
         };
 
         // Circle Quarter Filling Algorithms

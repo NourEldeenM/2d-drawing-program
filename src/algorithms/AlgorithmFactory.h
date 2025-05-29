@@ -8,7 +8,7 @@
 #include "CircleDrawingAlgos/CircleMidPointDDAModified.cpp"
 #include "CircleDrawingAlgos/CirclePolar.cpp"
 #include "CircleDrawingAlgos/CirclePolarIterative.cpp"
-#include "QuadAndCubicCurvesAlgos/BezierCurveAlgorithm.cpp"
+#include "QuadAndCubicCurvesAlgos/BezierCurveAlgorithm.h"
 #include "QuadAndCubicCurvesAlgos/HermiteCurveAlgorithm.cpp"
 #include "QuadAndCubicCurvesAlgos/CardinalSplineCurve.cpp"
 #include "QuadAndCubicCurvesAlgos/QuadraticCurveAlgorithm.cpp"
@@ -22,6 +22,9 @@
 #include "FillingAlgos/ConvexFillAlgorithm.cpp"
 #include "FillingAlgos/GeneralFillAlgorithm.cpp"
 #include "FillingAlgos/FillSquareHermitCurve.cpp"
+#include "FillingAlgos/FillRectangleBezierCurve.cpp"
+
+
 #include <memory>
 
 using namespace std;
@@ -89,6 +92,8 @@ public:
             return make_unique<GeneralFill>();
         case 23:
             return make_unique<FillSquareHermitCurve>();
+        case 24:
+            return make_unique<FillRectangleBezierCurve>();
         default:
             return nullptr;
         }
