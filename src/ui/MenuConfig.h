@@ -17,6 +17,7 @@ public:
             MenuItem("Curves", -1),
             MenuItem("Fill", -1),
             MenuItem("CircleQuarterFill", -1),
+            MenuItem("Clipping (Square Clipping Window)", -1),
             MenuItem("Color", -1),
             MenuItem("Clear Canvas", 0)};
 
@@ -63,14 +64,20 @@ public:
         menuItems[5].subItems = {
             MenuItem("Circle Quarter Line Fill", 20),
         };
+
+        // Clipping Algorithms
         menuItems[6].subItems = {
+            MenuItem("Point Clipping", 25),
+            MenuItem("Cohen-Sutherland Line Clipping", 26),
+        };
+
+        menuItems[7].subItems = {
             MenuItem("Black", 100),
             MenuItem("Red", 101),
             MenuItem("Blue", 102),
             MenuItem("Green", 103),
             MenuItem("Yellow", 104),
-            MenuItem("Magenta", 105)
-        };
+            MenuItem("Magenta", 105)};
         return menuItems;
     }
 };

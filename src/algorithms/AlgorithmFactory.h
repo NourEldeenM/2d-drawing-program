@@ -23,7 +23,8 @@
 #include "FillingAlgos/GeneralFillAlgorithm.cpp"
 #include "FillingAlgos/FillSquareHermitCurve.cpp"
 #include "FillingAlgos/FillRectangleBezierCurve.cpp"
-
+#include "Clipping/PointClipping.cpp"
+#include "Clipping/CohenSutherlandLineClipping.cpp"
 
 #include <memory>
 
@@ -94,6 +95,12 @@ public:
             return make_unique<FillSquareHermitCurve>();
         case 24:
             return make_unique<FillRectangleBezierCurve>();
+        // Clipping, square clipping window
+        case 25:
+            return make_unique<PointClippingAlgorithm>();
+        case 26:
+            return make_unique<CohenSutherlandLineClippingAlgorithm>();
+
         default:
             return nullptr;
         }

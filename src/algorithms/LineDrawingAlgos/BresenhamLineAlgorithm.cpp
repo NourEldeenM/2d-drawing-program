@@ -21,7 +21,7 @@ public:
 
         if (inputPoints.size() < 2)
         {
-            return outputPoints; // Not enough points
+            return outputPoints;
         }
 
         int x1 = inputPoints[0].x;
