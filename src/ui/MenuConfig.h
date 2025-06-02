@@ -63,6 +63,7 @@ public:
         // Circle Quarter Filling Algorithms
         menuItems[5].subItems = {
             MenuItem("Circle Quarter Line Fill", 20),
+            MenuItem("Circle Quarter Circle Fill", 27) // Assuming this is a new algorithm
         };
 
         // Clipping Algorithms

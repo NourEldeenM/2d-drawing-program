@@ -19,6 +19,7 @@
 #include "EllipseDrawingAlgos/EllipseMidPointAlgorithm.cpp"
 #include "EllipseDrawingAlgos/EllipseMidPointDDAAlgorithm.cpp"
 #include "CircleQuarterFilling/CircleQuarterLineFilling.cpp"
+#include "CircleQuarterFilling/CircleQuarterCircleFilling.cpp"
 #include "FillingAlgos/ConvexFillAlgorithm.cpp"
 #include "FillingAlgos/GeneralFillAlgorithm.cpp"
 #include "FillingAlgos/FillSquareHermitCurve.cpp"
@@ -100,6 +101,9 @@ public:
             return make_unique<PointClippingAlgorithm>();
         case 26:
             return make_unique<CohenSutherlandLineClippingAlgorithm>();
+        
+        case 27: 
+            return make_unique<CircleQuarterCircleFilling>();
 
         default:
             return nullptr;
