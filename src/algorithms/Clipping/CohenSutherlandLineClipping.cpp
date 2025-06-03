@@ -163,7 +163,7 @@ public:
         }
 
         // Draw original line in gray (dimmed)
-        drawLineUsingBresenham(origX1, origY1, origX2, origY2, originalLineColor, result);
+        // drawLineUsingBresenham(origX1, origY1, origX2, origY2, originalLineColor, result);
 
         if (clipLine(x1, y1, x2, y2, window))
         {
