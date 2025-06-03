@@ -18,6 +18,7 @@ public:
             MenuItem("Fill", -1),
             MenuItem("CircleQuarterFill", -1),
             MenuItem("Clipping (Square Clipping Window)", -1),
+            MenuItem("Clipping (Rectangle Clipping Window)", -1),
             MenuItem("Color", -1),
             MenuItem("Clear Canvas", 0)};
 
@@ -71,8 +72,14 @@ public:
             MenuItem("Point Clipping", 25),
             MenuItem("Cohen-Sutherland Line Clipping", 26),
         };
-
+        // Rectangle Clipping Algorithms
         menuItems[7].subItems = {
+            MenuItem("Point Clipping", 28),
+            MenuItem("Line Clipping", 29),
+            MenuItem("Polygon Clipping", 30),
+        };
+
+        menuItems[8].subItems = {
             MenuItem("Black", 100),
             MenuItem("Red", 101),
             MenuItem("Blue", 102),

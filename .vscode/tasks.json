@@ -38,6 +38,10 @@
 				"src/algorithms/QuadAndCubicCurvesAlgos/HermiteCurveAlgorithm.cpp",
 				"src/algorithms/QuadAndCubicCurvesAlgos/QuadraticCurveAlgorithm.cpp",
 
+				"src/algorithms/Clipping/Rectangle/line.cpp",
+				"src/algorithms/Clipping/Rectangle/point.cpp",
+				"src/algorithms/Clipping/Rectangle/polygon.cpp",
+
 				"-I",
 				"C:\\raylib\\include",
 				"-L",

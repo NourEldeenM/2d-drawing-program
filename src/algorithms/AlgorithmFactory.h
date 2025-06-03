@@ -26,6 +26,9 @@
 #include "FillingAlgos/FillRectangleBezierCurve.cpp"
 #include "Clipping/PointClipping.cpp"
 #include "Clipping/CohenSutherlandLineClipping.cpp"
+#include "Clipping/Rectangle/point.cpp"
+#include "Clipping/Rectangle/line.cpp"
+#include "Clipping/Rectangle/polygon.cpp"
 
 #include <memory>
 
@@ -105,6 +108,12 @@ public:
         case 27: 
             return make_unique<CircleQuarterCircleFilling>();
 
+        case 28: 
+            return make_unique<PointClippingRectangleWindowAlgorithm>();
+        case 29: 
+            return make_unique<LineClippingRectanlgeWindowAlgorithm>();
+        case 30: 
+            return make_unique<PolygonClippingRectanlgeWindowAlgorithm>();
         default:
             return nullptr;
         }
