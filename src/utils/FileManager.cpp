@@ -1,3 +1,4 @@
+#pragma once
 #include <vector>
 #include <string>
 #include <raylib.h>
@@ -26,6 +27,7 @@ private:
             out.write(reinterpret_cast<const char *>(&point.second), sizeof(Color));
         }
     }
+    
     static void deserializeShape(ifstream &in, vector<pair<Point, Color>> &shape)
     {
         // Read number of points in this shape
