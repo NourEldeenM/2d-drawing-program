@@ -4,25 +4,21 @@
 #include <iostream>
 #include <filesystem>
 #include <fstream>
-#include <map>
-#include "../algorithms/DrawingAlgorithm.h"
+#include <memory>
+#include "../core/DrawingState.cpp"
 #include "../algorithms/AlgorithmFactory.h"
 #include "MenuItem.h"
 #include "MenuConfig.h"
 
 namespace fs = filesystem;
-
 using namespace std;
 
 class GUI
 {
 private:
-    DrawingAlgorithm *currentAlgorithm;
-    vector<Point> inputPoints;
-    vector<vector<pair<Point, Color>>> drawnShapes;
+    unique_ptr<DrawingState> drawingState;
     int screenWidth;
     int screenHeight;
-    deque<Color> drawingColor;
 
     vector<MenuItem> menuItems;
     bool menuExpanded;
@@ -32,8 +28,7 @@ private:
 public:
     GUI()
     {
-        currentAlgorithm = new DDALineAlgorithm();
-        drawingColor.push_back(BLACK);
+        drawingState = make_unique<DrawingState>();
         screenHeight = GetScreenHeight();
         screenWidth = GetScreenWidth();
 
@@ -44,15 +39,6 @@ public:
 
         menuItems = MenuConfig::createMainMenu();
         activeSubmenu = nullptr;
-    }
-
-    ~GUI()
-    {
-        if (currentAlgorithm)
-        {
-            delete currentAlgorithm;
-            currentAlgorithm = nullptr;
-        }
     }
 
     void run()
@@ -149,60 +135,31 @@ public:
         // Handle special cases first
         if (i == 0)
         { // Clear Canvas
-            inputPoints.clear();
-            drawnShapes.clear();
+            drawingState->clear();
             return;
         }
 
-        // // Handle color modifications
-        // if (i == 4)
-        // { // Colored Parametric Line
-        //     if (drawingColor.size() > 1)
-        //         drawingColor.pop_back();
-        //     drawingColor.push_back(RED);
-        // }
-        // else if (i == 12)
-        // { // Flood Fill
-        //     if (drawingColor.size() > 1)
-        //         drawingColor.pop_back();
-        //     drawingColor.push_back(BLUE);
-        // }
-        // else if (i == 21)
-        // { // Convex Fill
-        //     if (drawingColor.size() > 1)
-        //         drawingColor.pop_back();
-        //     drawingColor.push_back(GREEN);
-        // }
-        // else if (i == 22)
-        // { // General Fill
-        //     if (drawingColor.size() > 1)
-        //         drawingColor.pop_back();
-        //     drawingColor.push_back(YELLOW);
-        // }
-        // else 
         if (i >= 100 && i <= 106)
         {
-            if (drawingColor.size() > 1)
-                drawingColor.pop_front();
-
+            Color newColor;
             switch (i)
             {
-                case 100: drawingColor.push_back(BLACK); break;
-                case 101: drawingColor.push_back(RED); break;
-                case 102: drawingColor.push_back(BLUE); break;
-                case 103: drawingColor.push_back(GREEN); break;
-                case 104: drawingColor.push_back(YELLOW); break;
-                case 105: drawingColor.push_back(MAGENTA); break;
-                // case 106: drawingColor.push_back(CYAN); break;
-                default: drawingColor.push_back(BLACK); break;
+                case 100: newColor = BLACK; break;
+                case 101: newColor = RED; break;
+                case 102: newColor = BLUE; break;
+                case 103: newColor = GREEN; break;
+                case 104: newColor = YELLOW; break;
+                case 105: newColor = MAGENTA; break;
+                default: newColor = BLACK; break;
             }
-            cout << "Color changed\n";
+            drawingState->setColor(newColor);
+            return;
         }
+
         auto newAlgorithm = AlgorithmFactory::createAlgorithm(i);
         if (newAlgorithm)
         {
-            delete currentAlgorithm;
-            currentAlgorithm = newAlgorithm.release();
+            drawingState->setAlgorithm(move(newAlgorithm));
         }
     }
 
@@ -214,14 +171,7 @@ public:
             // avoid clicks on menu button
             if (p.y > menuButton.y + menuButton.height || p.x > menuButton.x + menuButton.width)
             {
-                inputPoints.push_back(p);
-                if (currentAlgorithm && inputPoints.size() >= currentAlgorithm->getRequiredPoints())
-                {
-                    vector<pair<Point, Color>> shape = currentAlgorithm->draw(inputPoints, vector<Color> (drawingColor.begin(),drawingColor.end()));
-                    if (!shape.empty())
-                        drawnShapes.push_back(shape); // Store the shape
-                    inputPoints.clear();              // Reset for next line
-                }
+                drawingState->addPoint(p);
             }
         }
     }
@@ -230,8 +180,7 @@ public:
     {
         BeginDrawing();
         ClearBackground(RAYWHITE);
-        drawShapes();
-        drawInputPoints();
+        drawingState->render();
         if (menuExpanded)
             drawMenuOptions();
         drawButtons();
@@ -288,19 +237,6 @@ public:
         }
     }
 
-    void drawShapes()
-    {
-        for (const auto &shape : drawnShapes)
-            for (const auto &p : shape)
-                DrawPixel(p.first.x, p.first.y, p.second);
-    }
-
-    void drawInputPoints()
-    {
-        for (const Point &p : inputPoints)
-            DrawCircle(p.x, p.y, 3, RED);
-    }
-
     bool handleLoadButtonClick(const Vector2 &mousePoint)
     {
         if (CheckCollisionPointRec(mousePoint, loadButton) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
@@ -313,9 +249,6 @@ public:
                 cout << "Error: Could not open file for reading\n";
                 return false;
             }
-
-            // // Clear existing shapes
-            // drawnShapes.clear();
 
             // Read number of shapes
             size_t numShapes;
@@ -342,7 +275,7 @@ public:
                     shape.emplace_back(p, c);
                 }
 
-                drawnShapes.push_back(std::move(shape));
+                drawingState->addShape(shape);
             }
 
             inFile.close();
@@ -360,11 +293,12 @@ public:
             ofstream outFile(filePath, ios::binary);
 
             // Write number of shapes
-            size_t numShapes = drawnShapes.size();
+            const auto &shapes = drawingState->getShapes();
+            size_t numShapes = shapes.size();
             outFile.write(reinterpret_cast<const char *>(&numShapes), sizeof(numShapes));
 
             // Write each shape
-            for (const auto &shape : drawnShapes)
+            for (const auto &shape : shapes)
             {
                 // Write number of points in this shape
                 size_t numPoints = shape.size();
