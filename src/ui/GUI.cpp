@@ -6,6 +6,7 @@
 #include <fstream>
 #include <memory>
 #include "../core/DrawingState.cpp"
+#include "../utils/FileManager.cpp"
 #include "../algorithms/AlgorithmFactory.h"
 #include "MenuItem.h"
 #include "MenuConfig.h"
@@ -17,6 +18,7 @@ class GUI
 {
 private:
     unique_ptr<DrawingState> drawingState;
+    unique_ptr<FileManager> fileManager;
     int screenWidth;
     int screenHeight;
 
@@ -29,6 +31,7 @@ public:
     GUI()
     {
         drawingState = make_unique<DrawingState>();
+        fileManager = make_unique<FileManager>();
         screenHeight = GetScreenHeight();
         screenWidth = GetScreenWidth();
 
@@ -73,7 +76,7 @@ public:
         if (CheckCollisionPointRec(mousePoint, menuButton) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
         {
             menuExpanded = !menuExpanded;
-            cout<<"menu button clicked\n";
+            cout << "menu button clicked\n";
             return true;
         }
         return false;
@@ -144,13 +147,27 @@ public:
             Color newColor;
             switch (i)
             {
-                case 100: newColor = BLACK; break;
-                case 101: newColor = RED; break;
-                case 102: newColor = BLUE; break;
-                case 103: newColor = GREEN; break;
-                case 104: newColor = YELLOW; break;
-                case 105: newColor = MAGENTA; break;
-                default: newColor = BLACK; break;
+            case 100:
+                newColor = BLACK;
+                break;
+            case 101:
+                newColor = RED;
+                break;
+            case 102:
+                newColor = BLUE;
+                break;
+            case 103:
+                newColor = GREEN;
+                break;
+            case 104:
+                newColor = YELLOW;
+                break;
+            case 105:
+                newColor = MAGENTA;
+                break;
+            default:
+                newColor = BLACK;
+                break;
             }
             drawingState->setColor(newColor);
             return;
@@ -241,82 +258,25 @@ public:
     {
         if (CheckCollisionPointRec(mousePoint, loadButton) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
         {
-            fs::path filePath = fs::current_path() / "saved_drawings";
-            ifstream inFile(filePath, ios::binary);
-
-            if (!inFile)
-            {
-                cout << "Error: Could not open file for reading\n";
+            cout << "Load button clicked\n";
+            vector<vector<pair<Point, Color>>> shapes;
+            bool success = fileManager->loadDrawings(shapes, "saved_drawings");
+            if (!success)
                 return false;
-            }
-
-            // Read number of shapes
-            size_t numShapes;
-            inFile.read(reinterpret_cast<char *>(&numShapes), sizeof(numShapes));
-
-            // Read each shape
-            for (size_t i = 0; i < numShapes; i++)
-            {
-                // Read number of points in this shape
-                size_t numPoints;
-                inFile.read(reinterpret_cast<char *>(&numPoints), sizeof(numPoints));
-
-                // Create a new shape
-                vector<pair<Point, Color>> shape;
-                shape.reserve(numPoints);
-
-                // Read each point and its color
-                for (size_t j = 0; j < numPoints; j++)
-                {
-                    Point p;
-                    Color c;
-                    inFile.read(reinterpret_cast<char *>(&p), sizeof(Point));
-                    inFile.read(reinterpret_cast<char *>(&c), sizeof(Color));
-                    shape.emplace_back(p, c);
-                }
-
+            for (const auto &shape : shapes)
                 drawingState->addShape(shape);
-            }
-
-            inFile.close();
-            cout << "Loaded drawing from: " << filePath << '\n';
             return true;
         }
         return false;
     }
-    
+
     bool handleSaveButtonClick(const Vector2 &mousePoint)
     {
         if (CheckCollisionPointRec(mousePoint, saveButton) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
         {
-            fs::path filePath = fs::current_path() / "saved_drawings";
-            ofstream outFile(filePath, ios::binary);
-
-            // Write number of shapes
-            const auto &shapes = drawingState->getShapes();
-            size_t numShapes = shapes.size();
-            outFile.write(reinterpret_cast<const char *>(&numShapes), sizeof(numShapes));
-
-            // Write each shape
-            for (const auto &shape : shapes)
-            {
-                // Write number of points in this shape
-                size_t numPoints = shape.size();
-                outFile.write(reinterpret_cast<const char *>(&numPoints), sizeof(numPoints));
-
-                // Write each point and its color
-                for (const auto &point : shape)
-                {
-                    outFile.write(reinterpret_cast<const char *>(&point.first), sizeof(Point));
-                    outFile.write(reinterpret_cast<const char *>(&point.second), sizeof(Color));
-                }
-            }
-
-            outFile.close();
-            cout << "Saved drawing to: " << filePath << '\n';
+            fileManager->saveDrawings(drawingState->getShapes(), "saved_drawings");
             return true;
         }
         return false;
     }
-
 };
