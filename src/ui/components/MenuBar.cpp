@@ -1,10 +1,10 @@
 #include <raylib.h>
-#include "../MenuItem.h"
+#include "../config/MenuItem.h"
 #include <vector>
 #include "../../core/DrawingState.cpp"
 #include "../../utils/FileManager.cpp"
 #include "../../algorithms/AlgorithmFactory.h"
-#include "../MenuConfig.h"
+#include "../config/MenuConfig.h"
 #include <memory>
 
 using namespace std;
