@@ -67,10 +67,10 @@ public:
             MenuItem("Circle Quarter Circle Fill", 27) // Assuming this is a new algorithm
         };
 
-        // Clipping Algorithms
+        // Square Clipping Window Algorithms
         menuItems[6].subItems = {
             MenuItem("Point Clipping", 25),
-            MenuItem("Cohen-Sutherland Line Clipping", 26),
+            MenuItem("Line Clipping", 26),
         };
         // Rectangle Clipping Algorithms
         menuItems[7].subItems = {
