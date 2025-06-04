@@ -1,8 +1,8 @@
-#include "../DrawingAlgorithm.h"
+#include "../../DrawingAlgorithm.h"
 #include <vector>
 #include <algorithm>
 #include <cmath>
-#include "../LineDrawingAlgos/BresenhamLineAlgorithm.cpp"
+#include "../../LineDrawingAlgos/BresenhamLineAlgorithm.cpp"
 using namespace std;
 
 class CohenSutherlandLineClippingAlgorithm : public DrawingAlgorithm
@@ -75,22 +75,22 @@ private:
                 int x, y;
                 int outcodeOut = outcode1 ? outcode1 : outcode2;
 
-                if (outcodeOut & TOP)
+                if (outcodeOut & TOP)  // HIntersect
                 {
                     x = x1 + (x2 - x1) * (window.ymin - y1) / (y2 - y1);
                     y = window.ymin;
                 }
-                else if (outcodeOut & BOTTOM)
+                else if (outcodeOut & BOTTOM)   // HIntersect
                 {
                     x = x1 + (x2 - x1) * (window.ymax - y1) / (y2 - y1);
                     y = window.ymax;
                 }
-                else if (outcodeOut & RIGHT)
+                else if (outcodeOut & RIGHT) // VIntersect
                 {
                     y = y1 + (y2 - y1) * (window.xmax - x1) / (x2 - x1);
                     x = window.xmax;
                 }
-                else if (outcodeOut & LEFT)
+                else if (outcodeOut & LEFT) // VIntersect
                 {
                     y = y1 + (y2 - y1) * (window.xmin - x1) / (x2 - x1);
                     x = window.xmin;

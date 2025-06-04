@@ -1,4 +1,4 @@
-#include "../DrawingAlgorithm.h"
+#include "../../DrawingAlgorithm.h"
 #include <vector>
 #include <algorithm>
 #include <cmath>
@@ -51,7 +51,7 @@ public:
         Color pointColor = drawingColors.empty() ? BLACK : drawingColors.back();
         Color clippedColor = GREEN;
 
-        // Top edge
+        // Top and bottom edges
         for (int x = window.xmin; x <= window.xmax; x++)
         {
             result.push_back({{x, window.ymin}, windowColor});

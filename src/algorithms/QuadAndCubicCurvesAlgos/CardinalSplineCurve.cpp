@@ -11,7 +11,11 @@ private:
     vector<Point> drawHermiteCurve(Point p1, double u1, double v1, Point p2, double u2, double v2)
     {
         vector<Point> points;
-
+        // Hermite basis matrix H
+        // | 2  1 -2  1 |
+        // |-3 -2  3 -1 |
+        // | 0  1  0  0 |
+        // | 1  0  0  0 |
         // Hermite basis matrix coefficients
         double Cx[4];
         Cx[0] = 2 * p1.x + 1 * u1 - 2 * p2.x + 1 * u2;

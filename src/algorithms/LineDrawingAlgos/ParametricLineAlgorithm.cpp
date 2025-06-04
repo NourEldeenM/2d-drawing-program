@@ -26,6 +26,7 @@ public:
         startR = c1.r;
         startG = c1.g;
         startB = c1.b;
+
         endR = c2.r;
         endG = c2.g;
         endB = c2.b;
@@ -36,7 +37,7 @@ public:
         vector<pair<Point, Color>> outputPoints;
         if (inputPoints.size() < 2)
         {
-            return outputPoints; // Not enough points
+            return outputPoints; 
         }
 
         int x1 = inputPoints[0].x;
@@ -48,6 +49,7 @@ public:
 
         int alpha1 = x2 - x1;
         int alpha2 = y2 - y1;
+
         int alphaRed = endR - startR;
         int alphaGreen = endG - startG;
         int alphaBlue = endB - startB;
@@ -56,7 +58,7 @@ public:
         Point firstPoint = {x1, y1};
         outputPoints.push_back({firstPoint, drawingColors.back()});
 
-        double step = 1.0 / std::max(abs(alpha1), abs(alpha2));
+        double step = 1.0 / max(abs(alpha1), abs(alpha2));
         for (double t = step; t <= 1; t += step)
         {
             int x = round(x1 + t * alpha1);

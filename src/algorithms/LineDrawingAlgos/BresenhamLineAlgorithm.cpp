@@ -17,7 +17,7 @@ public:
 
     vector<pair<Point, Color>> draw(vector<Point> &inputPoints, vector<Color> drawingColors = {BLACK}) override
     {
-        std::vector<pair<Point, Color>> outputPoints;
+        vector<pair<Point, Color>> outputPoints;
 
         if (inputPoints.size() < 2)
         {

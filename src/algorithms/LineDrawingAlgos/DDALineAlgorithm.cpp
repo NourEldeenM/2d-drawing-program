@@ -44,8 +44,8 @@ public:
         {
             if (x1 > x2)
             {
-                std::swap(x1, x2);
-                std::swap(y1, y2);
+                swap(x1, x2);
+                swap(y1, y2);
                 dx = x2 - x1;
                 dy = y2 - y1;
             }
@@ -64,8 +64,8 @@ public:
         {
             if (y1 > y2)
             {
-                std::swap(x1, x2);
-                std::swap(y1, y2);
+                swap(x1, x2);
+                swap(y1, y2);
                 dx = x2 - x1;
                 dy = y2 - y1;
             }
@@ -80,7 +80,6 @@ public:
                 outputPoints.push_back({p, drawingColors.back()});
             }
         }
-
         return outputPoints;
     }
 };
