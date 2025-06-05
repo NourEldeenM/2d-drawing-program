@@ -59,8 +59,8 @@ public:
             MenuItem("Flood Fill", 12),
             MenuItem("Convex Fill", 21),
             MenuItem("General Fill", 22),
-            MenuItem("Square Fill Hermit", 23),
-            MenuItem("Rectangle Fill Bezier", 24),
+            MenuItem("Square Hermite", 23),
+            MenuItem("Rectangle Bezier", 24),
         };
 
         // Circle Quarter Filling Algorithms
