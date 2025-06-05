@@ -45,9 +45,9 @@ public:
         int x2 = inputPoints[1].x;
         int y2 = inputPoints[1].y;
 
-        Color blackColor = {0, 0, 0, 255};
-        Color userColor = drawingColors.back();
-        setColors(blackColor, userColor);
+        // Color blackColor = {0, 0, 0, 255};
+        // Color userColor = drawingColors.back();
+        setColors(drawingColors.back(), drawingColors.front());
 
         int alpha1 = x2 - x1;
         int alpha2 = y2 - y1;
