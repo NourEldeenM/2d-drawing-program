@@ -3,7 +3,6 @@
 #include <cmath>
 #include "../../CircleDrawingAlgos/CircleMidPointDDAModified.cpp"
 
-
 using namespace std;
 
 class CircularPointClipping : public DrawingAlgorithm {
@@ -41,10 +40,19 @@ public:
         auto circleOutline = circleAlgo.draw(circlePts, circleColors);
         result.insert(result.end(), circleOutline.begin(), circleOutline.end());
 
-        Color pointColor = colors.empty() ? BLACK : colors.back();
-        for (size_t i = 2; i < pts.size(); ++i) {
-            if (circle.contains(pts[i])) {
-                result.push_back({pts[i], pointColor});
+        Point pointToClip = pts[2];
+        bool isInside = circle.contains(pointToClip);
+
+        Color insideColor = GREEN;
+        Color outsideColor = GRAY;
+
+        Color displayColor = isInside ? insideColor : outsideColor;
+        
+        for (int dx = -2; dx <= 2; ++dx) {
+            for (int dy = -2; dy <= 2; ++dy) {
+                if (dx * dx + dy * dy <= 4) {
+                    result.push_back({{pointToClip.x + dx, pointToClip.y + dy}, displayColor});
+                }
             }
         }
 
