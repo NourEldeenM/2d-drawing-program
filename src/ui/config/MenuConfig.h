@@ -17,9 +17,9 @@ public:
             MenuItem("Curves", -1),
             MenuItem("Fill", -1),
             MenuItem("CircleQuarterFill", -1),
-            MenuItem("Clipping (Square Clipping Window)", -1),
-            MenuItem("Clipping (Rectangle Clipping Window)", -1),
-            MenuItem("Clipping (Circle Clipping Window)", -1),
+            MenuItem("Clipping Square", -1),
+            MenuItem("Clipping Rectangle", -1),
+            MenuItem("Clipping Circle", -1),
             MenuItem("Color", -1),
             MenuItem("Clear Canvas", 0)};
 
@@ -28,7 +28,7 @@ public:
             MenuItem("DDA", 1),
             MenuItem("Bresenham", 2),
             MenuItem("Parametric", 3),
-            MenuItem("Colored Parametric", 4)};
+            MenuItem("Color Parametric", 4)};
 
         // Circle algorithms
         menuItems[1].subItems = {
@@ -36,7 +36,7 @@ public:
             MenuItem("Polar", 6),
             MenuItem("Polar Iterative", 7),
             MenuItem("MidPoint DDA", 8),
-            MenuItem("Enhanced MidPoint DDA", 9)};
+            MenuItem("Enhance Mid DDA", 9)};
 
         // Ellipse algorithms
         menuItems[2].subItems = {
@@ -58,32 +58,32 @@ public:
             MenuItem("Flood Fill", 12),
             MenuItem("Convex Fill", 21),
             MenuItem("General Fill", 22),
-            MenuItem("Square Fill Using Hermit Curve", 23),
-            MenuItem("Rectangle Fill Using Bezier Curve", 24),
+            MenuItem("Square Fill Hermit", 23),
+            MenuItem("Rectangle Fill Bezier", 24),
         };
 
         // Circle Quarter Filling Algorithms
         menuItems[5].subItems = {
-            MenuItem("Circle Quarter Line Fill", 20),
-            MenuItem("Circle Quarter Circle Fill", 27) // Assuming this is a new algorithm
+            MenuItem("Line", 20),
+            MenuItem("Circle", 27) // Assuming this is a new algorithm
         };
 
         // Square Clipping Window Algorithms
         menuItems[6].subItems = {
-            MenuItem("Point Clipping", 25),
-            MenuItem("Line Clipping", 26),
+            MenuItem("Point", 25),
+            MenuItem("Line", 26),
         };
         // Rectangle Clipping Algorithms
         menuItems[7].subItems = {
-            MenuItem("Point Clipping", 28),
-            MenuItem("Line Clipping", 29),
-            MenuItem("Polygon Clipping", 30),
+            MenuItem("Point", 28),
+            MenuItem("Line", 29),
+            MenuItem("Polygon", 30),
         };
         // circle clipping window
         menuItems[8].subItems = {
-            MenuItem("Point Clipping", 31),
-            MenuItem("Line Clipping", 32),
-            MenuItem("Polygon Clipping", 33)
+            MenuItem("Point", 31),
+            MenuItem("Line", 32),
+            MenuItem("Polygon", 33)
         };
         menuItems[9].subItems = {
             MenuItem("Black", 100),

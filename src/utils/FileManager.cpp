@@ -80,7 +80,6 @@ public:
         inFile.read(reinterpret_cast<char *>(&numShapes), sizeof(numShapes));
 
         // Clear existing shapes
-        shapes.clear();
         shapes.reserve(numShapes);
 
         // Read each shape
