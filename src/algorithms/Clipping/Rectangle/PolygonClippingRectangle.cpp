@@ -115,7 +115,7 @@ public:
     {
         setName((char *)"Polygon Clipping Rectangle window");
         // to draw triangle
-        setRequiredPoints(5);
+        setRequiredPoints(7);
     }
 
     vector<pair<Point, Color>> draw(vector<Point> &pts, vector<Color> drawingColors = {BLACK}) override {

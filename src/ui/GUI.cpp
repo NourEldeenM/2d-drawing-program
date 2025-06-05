@@ -59,7 +59,7 @@ public:
     {
         if (!menuBar->isMenuExpanded() && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
         {
-            Point p = {GetMouseX(), GetMouseY()};
+            Point p = {GetMouseX(), GetMouseY()+10};
             drawingState->addPoint(p);
         }
     }
