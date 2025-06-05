@@ -59,7 +59,7 @@ public:
     {
         InitWindow(screenWidth, screenHeight, "2d drawing program");
         SetTargetFPS(60);
-        SetMouseCursor(MOUSE_CURSOR_CROSSHAIR);
+        SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
         while (!WindowShouldClose())
         {
             handleInput();
@@ -87,7 +87,6 @@ public:
         if (CheckCollisionPointRec(mousePoint, menuButton) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
         {
             menuExpanded = !menuExpanded;
-            cout<<"menu button clicked\n";
             return true;
         }
         return false;
@@ -154,32 +153,6 @@ public:
             return;
         }
 
-        // // Handle color modifications
-        // if (i == 4)
-        // { // Colored Parametric Line
-        //     if (drawingColor.size() > 1)
-        //         drawingColor.pop_back();
-        //     drawingColor.push_back(RED);
-        // }
-        // else if (i == 12)
-        // { // Flood Fill
-        //     if (drawingColor.size() > 1)
-        //         drawingColor.pop_back();
-        //     drawingColor.push_back(BLUE);
-        // }
-        // else if (i == 21)
-        // { // Convex Fill
-        //     if (drawingColor.size() > 1)
-        //         drawingColor.pop_back();
-        //     drawingColor.push_back(GREEN);
-        // }
-        // else if (i == 22)
-        // { // General Fill
-        //     if (drawingColor.size() > 1)
-        //         drawingColor.pop_back();
-        //     drawingColor.push_back(YELLOW);
-        // }
-        // else 
         if (i >= 100 && i <= 106)
         {
             if (drawingColor.size() > 1)
@@ -187,16 +160,36 @@ public:
 
             switch (i)
             {
-                case 100: drawingColor.push_back(BLACK); break;
-                case 101: drawingColor.push_back(RED); break;
-                case 102: drawingColor.push_back(BLUE); break;
-                case 103: drawingColor.push_back(GREEN); break;
-                case 104: drawingColor.push_back(YELLOW); break;
-                case 105: drawingColor.push_back(MAGENTA); break;
-                // case 106: drawingColor.push_back(CYAN); break;
-                default: drawingColor.push_back(BLACK); break;
+                case 100: 
+                    drawingColor.push_back(BLACK);
+                    cout << "Color changed to Black\n";
+                    break;
+                case 101: 
+                    drawingColor.push_back(RED);
+                    cout << "Color set to Black\n";
+                    break;
+                case 102: 
+                    drawingColor.push_back(BLUE); 
+                    cout << "Color set to Blue\n";
+                    break;
+                case 103: 
+                    drawingColor.push_back(GREEN); 
+                    cout << "Color set to Green\n";
+                    break;
+                case 104: 
+                    drawingColor.push_back(YELLOW); 
+                    cout << "Color set to Yellow\n";
+                    break;
+                case 105: 
+                    drawingColor.push_back(MAGENTA); 
+                    cout << "Color set to Magenta\n";
+                    break;
+                default: 
+                    drawingColor.push_back(BLACK); 
+                    cout << "Color set to Black\n";
+                    break;
             }
-            cout << "Color changed\n";
+            
         }
         auto newAlgorithm = AlgorithmFactory::createAlgorithm(i);
         if (newAlgorithm)

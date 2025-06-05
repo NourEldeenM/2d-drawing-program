@@ -19,6 +19,7 @@ public:
             MenuItem("CircleQuarterFill", -1),
             MenuItem("Clipping (Square Clipping Window)", -1),
             MenuItem("Clipping (Rectangle Clipping Window)", -1),
+            MenuItem("Clipping (Circle Clipping Window)", -1),
             MenuItem("Color", -1),
             MenuItem("Clear Canvas", 0)};
 
@@ -78,8 +79,13 @@ public:
             MenuItem("Line Clipping", 29),
             MenuItem("Polygon Clipping", 30),
         };
-
+        // circle clipping window
         menuItems[8].subItems = {
+            MenuItem("Point Clipping", 31),
+            MenuItem("Line Clipping", 32),
+            MenuItem("Polygon Clipping", 33)
+        };
+        menuItems[9].subItems = {
             MenuItem("Black", 100),
             MenuItem("Red", 101),
             MenuItem("Blue", 102),
