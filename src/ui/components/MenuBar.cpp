@@ -214,8 +214,9 @@ public:
         } else if (i == 107) {
             SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
         } else if (i == 108) {
-            SetMouseCursor(MOUSE_CURSOR_ARROW);
+            SetMouseCursor(MOUSE_CURSOR_NOT_ALLOWED);
         }
+        // SetMouseCursor(MOUSE_CURSOR_NOT_ALLOWED)
 
         auto newAlgorithm = AlgorithmFactory::createAlgorithm(i);
         if (newAlgorithm)

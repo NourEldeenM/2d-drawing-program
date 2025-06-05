@@ -96,7 +96,7 @@ public:
         menuItems[10].subItems = {
             MenuItem("Default", 106),
             MenuItem("Pointing", 107),
-            MenuItem("Arrow", 108)
+            MenuItem("Not Allowed", 108)
         };
         return menuItems;
     }
