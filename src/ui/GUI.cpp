@@ -38,7 +38,6 @@ public:
     {
         InitWindow(screenWidth, screenHeight, "2d drawing program");
         SetTargetFPS(60);
-        SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
         while (!WindowShouldClose())
         {
             handleInput();

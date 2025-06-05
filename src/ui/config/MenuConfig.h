@@ -21,6 +21,7 @@ public:
             MenuItem("Clipping Rectangle", -1),
             MenuItem("Clipping Circle", -1),
             MenuItem("Color", -1),
+            MenuItem("Cursor", -1),
             MenuItem("Clear Canvas", 0)};
 
         // Line algorithms
@@ -92,6 +93,11 @@ public:
             MenuItem("Green", 103),
             MenuItem("Yellow", 104),
             MenuItem("Magenta", 105)};
+        menuItems[10].subItems = {
+            MenuItem("Default", 106),
+            MenuItem("Pointing", 107),
+            MenuItem("Arrow", 108)
+        };
         return menuItems;
     }
 };

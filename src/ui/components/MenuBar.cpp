@@ -172,7 +172,7 @@ public:
             return;
         }
 
-        if (i >= 100 && i <= 106)
+        if (i >= 100 && i < 106)
         {
             Color newColor;
             switch (i)
@@ -207,6 +207,14 @@ public:
             }
             drawingState->setColor(newColor);
             return;
+        }
+
+        if (i == 106) {
+            SetMouseCursor(MOUSE_CURSOR_DEFAULT);
+        } else if (i == 107) {
+            SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
+        } else if (i == 108) {
+            SetMouseCursor(MOUSE_CURSOR_ARROW);
         }
 
         auto newAlgorithm = AlgorithmFactory::createAlgorithm(i);
