@@ -2,6 +2,8 @@
 
 A modern C++ application for creating 2D graphics using various drawing algorithms. Built with raylib for GUI rendering.
 
+![project overview](public/project%20overview.png)
+
 ## ✨ Features
 
 - 📝 Line Drawing Algorithms
@@ -36,6 +38,10 @@ A modern C++ application for creating 2D graphics using various drawing algorith
 
 ## 🏗️ Architecture
 
+This application uses a modular structure for scalability and clarity. Below is a high-level overview of key components.
+
+![class diagram](public/class%20diagram.png)
+
 ### Core Components
 
 1. **GUI** ([`src/ui/GUI.cpp`](src/ui/GUI.cpp))
@@ -61,6 +67,9 @@ A modern C++ application for creating 2D graphics using various drawing algorith
 
 ```plaintext
 src/
+|── public/
+│   ├── class diagram.png
+│   └── project overview.png
 ├── core/               # Core application logic
 │   └── DrawingState.cpp # Manages drawing state
 ├── ui/                 # User interface components
