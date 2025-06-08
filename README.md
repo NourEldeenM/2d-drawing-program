@@ -38,7 +38,7 @@ A modern C++ application for creating 2D graphics using various drawing algorith
 
 ## 🏗️ Architecture
 
-This application uses a modular structure for scalability and clarity. Below is a high-level overview of key components.
+This application uses a modular structure for scalability and clarity. Below is a class diagram of key components.
 
 ![class diagram](public/class%20diagram.png)
 
